@@ -1,4 +1,4 @@
-import { Settings } from '../../assets/icons';
+import { Settings } from '../../../assets/icons';
 
 import './WorkspaceSettings.scss';
 

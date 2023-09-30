@@ -12,6 +12,11 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh', 'react', '@typescript-eslint', 'simple-import-sort'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   rules: {
     'object-curly-spacing': ['error', 'always'],
     'no-console': 1,

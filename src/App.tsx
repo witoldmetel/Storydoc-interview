@@ -1,11 +1,7 @@
-import { WorkspacesSidebar } from './components/workspacesSidebar';
+import { Layout } from './core/layouts/Layout';
 
 import './App.scss';
 
 export const App = () => {
-  return (
-    <div className="container">
-      <WorkspacesSidebar />
-    </div>
-  );
+  return <Layout />;
 };
