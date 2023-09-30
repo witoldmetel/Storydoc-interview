@@ -1,6 +1,8 @@
 import { clsx } from 'clsx';
 
+import { useHover } from '../../hooks/useHover';
 import { WorkspaceType } from '../../store/types';
+import { ActionButtons } from '../ActionButtons/ActionButtons';
 
 import './WorkspaceItem.scss';
 
@@ -13,6 +15,8 @@ type WorkspaceItemProps = {
 };
 
 export const WorkspaceItem = ({ editMode, workspace, activeWorkspace, onClick }: WorkspaceItemProps) => {
+  const [isHovering, handleMouseOver, handleMouseOut] = useHover();
+
   return (
     <div
       className={clsx(
@@ -21,6 +25,8 @@ export const WorkspaceItem = ({ editMode, workspace, activeWorkspace, onClick }:
         { 'active-workspace': workspace.createdAt === activeWorkspace }
       )}
       onClick={() => onClick(workspace.createdAt)}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
     >
       {workspace.logo ? (
         <img src={workspace.logo} alt={workspace.name} />
@@ -28,6 +34,7 @@ export const WorkspaceItem = ({ editMode, workspace, activeWorkspace, onClick }:
         <span className="initials">{workspace.initials}</span>
       )}
       <span>{workspace.name}</span>
+      {isHovering ? <ActionButtons /> : null}
     </div>
   );
 };
