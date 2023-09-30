@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { clsx } from 'clsx';
 
 import { Boards, Home, Profile, Search } from '../../../assets/icons';
 import { UserProfile, WorkspaceCreator, WorkspaceItem, WorkspaceSettings } from '../../components';
@@ -45,7 +46,7 @@ export const Sidebar = () => {
         {menuItems.map((item) => (
           <div key={item.title} className="menu-item">
             {item.icon}
-            <p className={`menu-item-title ${item.isActive && 'active'}`}>{item.title}</p>
+            <p className={clsx('menu-item-title', { active: item.isActive })}>{item.title}</p>
           </div>
         ))}
       </div>

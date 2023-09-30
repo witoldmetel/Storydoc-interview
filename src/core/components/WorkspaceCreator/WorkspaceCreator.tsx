@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { clsx } from 'clsx';
 
 import { Plus, Tick } from '../../../assets/icons';
 import { addBoard } from '../../store/slices/boardSlice';
@@ -56,7 +57,7 @@ export const WorkspaceCreator = ({ editMode, callback }: WorkspaceCreatorProps) 
       <Button
         onClick={handleWorkspaceCreate}
         disabled={isButtonDisabled}
-        className={`${editMode && 'edit-mode'} ${isButtonDisabled ? 'disabled' : 'enabled'}`}
+        className={clsx({ 'edit-mode': editMode }, { disabled: isButtonDisabled }, { enabled: !isButtonDisabled })}
       >
         <div className="workspace-content">
           {editMode ? <Tick color={isButtonDisabled ? '#594F78' : '#FFF'} /> : <Plus />}

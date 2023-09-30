@@ -1,3 +1,5 @@
+import { clsx } from 'clsx';
+
 import './Button.scss';
 
 type ButtonProps = {
@@ -9,7 +11,7 @@ type ButtonProps = {
 
 export const Button = ({ children, className = '', onClick, ...rest }: ButtonProps) => {
   return (
-    <button className={`button ${className}`} onClick={onClick} {...rest}>
+    <button className={clsx('button', className)} onClick={onClick} {...rest}>
       {children}
     </button>
   );

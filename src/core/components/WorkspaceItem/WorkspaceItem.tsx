@@ -1,3 +1,5 @@
+import { clsx } from 'clsx';
+
 import { WorkspaceType } from '../../store/types';
 
 import './WorkspaceItem.scss';
@@ -13,9 +15,11 @@ type WorkspaceItemProps = {
 export const WorkspaceItem = ({ editMode, workspace, activeWorkspace, onClick }: WorkspaceItemProps) => {
   return (
     <div
-      className={`workspace-item ${editMode && 'inactive-workspace'} ${
-        workspace.createdAt === activeWorkspace && 'active-workspace'
-      }`}
+      className={clsx(
+        'workspace-item',
+        { 'inactive-workspace': editMode },
+        { 'active-workspace': workspace.createdAt === activeWorkspace }
+      )}
       onClick={() => onClick(workspace.createdAt)}
     >
       {workspace.logo ? (
