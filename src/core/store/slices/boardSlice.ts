@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import Images from '../../../assets/images';
 import { BoardInterface } from '../types';
 
-const initialState: BoardInterface | Record<string, never> = {};
+const initialState: BoardInterface[] = [{ name: 'Acme Corp workspace', logo: Images.PredefinedLogo }];
 
 export const boardSlice = createSlice({
   name: 'board',
