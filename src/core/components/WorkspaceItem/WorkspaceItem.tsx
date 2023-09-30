@@ -21,6 +21,7 @@ export const WorkspaceItem = ({ editMode, workspace, activeWorkspace, onClick }:
     <div
       className={clsx(
         'workspace-item',
+        { hovered: isHovering && !editMode },
         { 'inactive-workspace': editMode },
         { 'active-workspace': workspace.createdAt === activeWorkspace }
       )}
@@ -28,13 +29,18 @@ export const WorkspaceItem = ({ editMode, workspace, activeWorkspace, onClick }:
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
-      {workspace.logo ? (
-        <img src={workspace.logo} alt={workspace.name} />
-      ) : (
-        <span className="initials">{workspace.initials}</span>
-      )}
-      <span>{workspace.name}</span>
-      {isHovering ? <ActionButtons /> : null}
+      <div className="workspace-item-content">
+        {workspace.logo ? (
+          <img src={workspace.logo} alt={workspace.name} />
+        ) : (
+          <span className="initials">{workspace.initials}</span>
+        )}
+        <span className={clsx({ hovered: isHovering && !editMode })}>{workspace.name}</span>
+      </div>
+
+      {isHovering && !editMode ? (
+        <ActionButtons onEditClick={() => console.log('edit')} onDeleteClick={() => console.log('delete')} />
+      ) : null}
     </div>
   );
 };

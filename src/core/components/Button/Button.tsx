@@ -6,7 +6,7 @@ type ButtonProps = {
   children?: React.ReactNode;
   className?: string;
 
-  onClick: VoidFunction;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button = ({ children, className = '', onClick, ...rest }: ButtonProps) => {
