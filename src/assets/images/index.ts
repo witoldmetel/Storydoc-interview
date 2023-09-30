@@ -1,7 +1,7 @@
 import User from './user.png';
 
 const Images = {
-    User,
-}
+  User,
+};
 
 export default Images;

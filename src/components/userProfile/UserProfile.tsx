@@ -1,9 +1,10 @@
-import Images from "../../assets/images";
-import "./UserProfile.scss";
+import Images from '../../assets/images';
+
+import './UserProfile.scss';
 
 export const UserProfile = () => {
   const user = {
-    name: "John Doe",
+    name: 'John Doe',
     image: Images.User,
   };
 

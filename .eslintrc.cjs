@@ -4,14 +4,14 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'prettier',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh','react', '@typescript-eslint', 'simple-import-sort'],
+  plugins: ['react-refresh', 'react', '@typescript-eslint', 'simple-import-sort'],
   rules: {
     'object-curly-spacing': ['error', 'always'],
     'no-console': 1,
@@ -60,10 +60,7 @@ module.exports = {
     'react/require-default-props': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx', '.js', '.jsx'] }],
     'react/jsx-props-no-spreading': 0,
-    'react-refresh/only-export-components': [
-      1,
-      { allowConstantExport: true },
-    ],
+    'react-refresh/only-export-components': [1, { allowConstantExport: true }],
   },
   overrides: [
     // override "simple-import-sort" config
@@ -92,4 +89,4 @@ module.exports = {
       },
     },
   ],
-}
+};
