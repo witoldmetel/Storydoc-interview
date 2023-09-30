@@ -39,21 +39,9 @@
       }
     }
 
-    .workspace-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 20px;
-
-      &-content {
-        font-family: Inter;
-        font-size: 13px;
-        font-weight: 600;
-        line-height: 20px;
-        letter-spacing: 0em;
-        text-align: left;
-        margin-left: 6px;
-      }
+    .inactive-workspace {
+      opacity: 0.4;
+      background: transparent;
     }
   }
 

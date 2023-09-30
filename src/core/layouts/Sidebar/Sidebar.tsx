@@ -1,35 +1,39 @@
-import { Boards, Home, Plus, Profile, Search } from '../../../assets/icons';
-import { Button, UserProfile, WorkspaceSettings } from '../../components';
+import { useState } from 'react';
+
+import { Boards, Home, Profile, Search } from '../../../assets/icons';
+import { UserProfile, WorkspaceCreator, WorkspaceSettings } from '../../components';
 import { useAppSelector } from '../../store/store';
 
 import './Sidebar.scss';
 
+const menuItems = [
+  { title: 'Dashboard', icon: <Home />, isActive: false },
+  { title: 'Boards', icon: <Boards />, isActive: true },
+  { title: 'Profile', icon: <Profile />, isActive: false },
+  { title: 'Search', icon: <Search />, isActive: false },
+];
+
 export const Sidebar = () => {
   const workspaces = useAppSelector((state) => state.board);
-  console.log('file: Sidebar.tsx:9 ~ Sidebar ~ boards:', workspaces);
 
-  const menuItems = [
-    { title: 'Dashboard', icon: <Home />, isActive: false },
-    { title: 'Boards', icon: <Boards />, isActive: true },
-    { title: 'Profile', icon: <Profile />, isActive: false },
-    { title: 'Search', icon: <Search />, isActive: false },
-  ];
+  const [editMode, setEditMode] = useState(false);
 
   return (
     <div className="sidebar">
       <div className="sidebar-header">
         {workspaces.map((workspace) => (
-          <div key={workspace.name} className="workspace">
+          <div key={workspace.name} className={`workspace ${editMode && 'inactive-workspace'}`}>
             <img src={workspace.logo} alt={workspace.name} />
             <span>{workspace.name}</span>
           </div>
         ))}
-        <Button onClick={() => console.log('wow')}>
-          <div className="workspace-button">
-            <Plus />
-            <p className="workspace-button-content">Create workspace</p>
-          </div>
-        </Button>
+        <WorkspaceCreator
+          editMode={editMode}
+          createHandler={() => {
+            setEditMode((prev) => !prev);
+            console.log('create workspace');
+          }}
+        />
       </div>
       <div className="sidebar-main">
         {menuItems.map((item) => (

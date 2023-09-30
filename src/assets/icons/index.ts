@@ -4,3 +4,4 @@ export { Plus } from './Plus';
 export { Profile } from './Profile';
 export { Search } from './Search';
 export { Settings } from './Settings';
+export { Tick } from './Tick';

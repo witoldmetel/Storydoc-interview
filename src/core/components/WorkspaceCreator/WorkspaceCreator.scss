@@ -1,0 +1,103 @@
+.workspace-creator {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 64px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f4f7fe;
+  margin-bottom: 8px;
+
+  .logo {
+    min-width: 32px;
+    height: 32px;
+    margin-right: 12px;
+    background-color: #b3c4d6;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 32px;
+    color: #001c39;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .input-name {
+    color: #001c39;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px;
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+  }
+}
+
+.workspace-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+
+  &-name {
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-left: 6px;
+  }
+}
+
+.edit-mode {
+  &.disabled {
+    border: 1px solid var(--midnight-blue-300, #b8b3c5);
+    background: var(--midnight-blue-200, #d0cdd8);
+    box-shadow: none;
+
+    .workspace-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+
+      &-name {
+        color: #594f78;
+      }
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+    }
+  }
+
+  &.enabled {
+    border: 1px solid #007dfc;
+    background: #007dfc;
+    box-shadow: 0px 0px 0px 0px rgba(18, 3, 62, 0.1), 0px 0px 1px 0px rgba(18, 3, 62, 0.1),
+      0px 1px 1px 0px rgba(18, 3, 62, 0.09), 0px 3px 2px 0px rgba(18, 3, 62, 0.05),
+      0px 5px 2px 0px rgba(18, 3, 62, 0.01), 0px 8px 2px 0px rgba(18, 3, 62, 0);
+
+    .workspace-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+
+      &-name {
+        color: #fff;
+      }
+    }
+
+    &:hover {
+      opacity: 0.8;
+      border: 1px solid #007dfc;
+      background: #007dfc;
+    }
+  }
+}
