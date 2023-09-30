@@ -1,0 +1,48 @@
+.workspace-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 64px;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+
+  img {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+  }
+
+  .initials {
+    min-width: 32px;
+    height: 32px;
+    margin-right: 12px;
+    background-color: #b3c4d6;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 32px;
+    color: #001c39;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  span {
+    color: #001c39;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px;
+  }
+
+  &.inactive-workspace {
+    opacity: 0.4;
+    background: transparent;
+  }
+
+  &.active-workspace {
+    background: #f4f7fe;
+  }
+}

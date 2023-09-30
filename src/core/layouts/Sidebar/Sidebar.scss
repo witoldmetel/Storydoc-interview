@@ -12,36 +12,10 @@
     padding: 8px;
     padding-bottom: 16px;
     border-bottom: 1px solid #e4e9f3;
+    max-height: 50%;
 
-    .workspace {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      height: 64px;
-      padding: 16px;
-      border-radius: 8px;
-      background: #f4f7fe;
-      margin-bottom: 8px;
-
-      img {
-        width: 32px;
-        height: 32px;
-        margin-right: 12px;
-      }
-
-      span {
-        color: #001c39;
-        font-family: Inter;
-        font-size: 13px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 18px;
-      }
-    }
-
-    .inactive-workspace {
-      opacity: 0.4;
-      background: transparent;
+    .workspaces-wrapper {
+      overflow-y: auto;
     }
   }
 

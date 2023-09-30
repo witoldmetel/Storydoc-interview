@@ -1,16 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import Images from '../../../assets/images';
-import { BoardInterface } from '../types';
+import { WorkspaceType } from '../types';
 
-const initialState: BoardInterface[] = [{ name: 'Acme Corp workspace', logo: Images.PredefinedLogo }];
+const initialState: WorkspaceType[] = [
+  { name: 'Acme Corp workspace', initials: 'A', logo: Images.PredefinedLogo, createdAt: 0 },
+];
 
-export const boardSlice = createSlice({
+const boardSlice = createSlice({
   name: 'board',
   initialState,
-  reducers: {},
+  reducers: {
+    addBoard: (state, action: PayloadAction<WorkspaceType>) => {
+      const { name, initials, createdAt, logo } = action.payload;
+
+      state.push({ name, initials, createdAt, logo: logo || '' });
+    },
+  },
 });
 
-// @todo: Fix it
-// eslint-disable-next-line no-empty-pattern
-export const {} = boardSlice.actions;
+export const { addBoard } = boardSlice.actions;
+
+export default boardSlice.reducer;

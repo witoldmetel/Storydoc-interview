@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Plus, Tick } from '../../../assets/icons';
+import { addBoard } from '../../store/slices/boardSlice';
 import { Button } from '../Button/Button';
 
 import './WorkspaceCreator.scss';
@@ -8,24 +10,39 @@ import './WorkspaceCreator.scss';
 type WorkspaceCreatorProps = {
   editMode: boolean;
 
-  createHandler: VoidFunction;
+  callback: (workspaceId?: number) => void;
 };
 
-export const WorkspaceCreator = ({ editMode, createHandler }: WorkspaceCreatorProps) => {
+export const WorkspaceCreator = ({ editMode, callback }: WorkspaceCreatorProps) => {
+  const dispatch = useDispatch();
+
   const [workspaceName, setWorkspaceName] = useState('');
+
+  const workspaceInitials = workspaceName ? workspaceName.charAt(0).toUpperCase() : '';
+  const isButtonDisabled = editMode ? workspaceName.trim() === '' : false;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setWorkspaceName(event.target.value);
   };
 
-  const initials = workspaceName ? workspaceName.charAt(0).toUpperCase() : '';
-  const isButtonDisabled = editMode ? workspaceName.trim() === '' : false;
+  const handleWorkspaceCreate = () => {
+    if (editMode) {
+      const date = new Date();
+      const workspaceId = date.getTime();
+
+      dispatch(addBoard({ name: workspaceName, initials: workspaceInitials, createdAt: workspaceId }));
+      setWorkspaceName('');
+      callback(workspaceId);
+    } else {
+      callback();
+    }
+  };
 
   return (
     <>
       {editMode ? (
         <div className="workspace-creator">
-          <span className="logo">{initials}</span>
+          <span className="logo">{workspaceInitials}</span>
           <input
             type="text"
             className="input-name"
@@ -37,16 +54,13 @@ export const WorkspaceCreator = ({ editMode, createHandler }: WorkspaceCreatorPr
         </div>
       ) : null}
       <Button
-        onClick={() => {
-          createHandler();
-          setWorkspaceName('');
-        }}
+        onClick={handleWorkspaceCreate}
         disabled={isButtonDisabled}
         className={`${editMode && 'edit-mode'} ${isButtonDisabled ? 'disabled' : 'enabled'}`}
       >
         <div className="workspace-content">
           {editMode ? <Tick color={isButtonDisabled ? '#594F78' : '#FFF'} /> : <Plus />}
-          <p className="workspace-content-name">Create workspace</p>
+          <p className="workspace-content-name">{editMode ? 'Save new workspace' : 'Create workspace'}</p>
         </div>
       </Button>
     </>

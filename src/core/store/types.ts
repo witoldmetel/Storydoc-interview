@@ -1,4 +1,7 @@
-export interface BoardInterface {
+export type WorkspaceType = {
   name: string;
-  logo: string;
-}
+  initials: string;
+  createdAt: number;
+
+  logo?: string;
+};

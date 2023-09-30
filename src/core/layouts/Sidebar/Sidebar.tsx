@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Boards, Home, Profile, Search } from '../../../assets/icons';
-import { UserProfile, WorkspaceCreator, WorkspaceSettings } from '../../components';
+import { UserProfile, WorkspaceCreator, WorkspaceItem, WorkspaceSettings } from '../../components';
 import { useAppSelector } from '../../store/store';
 
 import './Sidebar.scss';
@@ -16,22 +16,28 @@ const menuItems = [
 export const Sidebar = () => {
   const workspaces = useAppSelector((state) => state.board);
 
+  const [activeWorkspace, setActiveWorkspace] = useState(workspaces[0].createdAt);
   const [editMode, setEditMode] = useState(false);
 
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        {workspaces.map((workspace) => (
-          <div key={workspace.name} className={`workspace ${editMode && 'inactive-workspace'}`}>
-            <img src={workspace.logo} alt={workspace.name} />
-            <span>{workspace.name}</span>
-          </div>
-        ))}
+        <div className="workspaces-wrapper" style={{ maxHeight: editMode ? '80%' : '94%' }}>
+          {workspaces.map((workspace) => (
+            <WorkspaceItem
+              key={workspace.createdAt}
+              editMode={editMode}
+              workspace={workspace}
+              activeWorkspace={activeWorkspace}
+              onClick={(id: number) => setActiveWorkspace(id)}
+            />
+          ))}
+        </div>
         <WorkspaceCreator
           editMode={editMode}
-          createHandler={() => {
+          callback={(workspaceId) => {
             setEditMode((prev) => !prev);
-            console.log('create workspace');
+            workspaceId && setActiveWorkspace(workspaceId);
           }}
         />
       </div>
