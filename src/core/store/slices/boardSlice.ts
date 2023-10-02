@@ -5,7 +5,13 @@ import { getWorkspaceInitials } from '../../components/utils';
 import { WorkspaceType } from '../types';
 
 const initialState: WorkspaceType[] = [
-  { id: 0, name: 'Acme Corp workspace', initials: 'A', logo: Images.PredefinedLogo },
+  {
+    id: 0,
+    name: 'Acme Corp workspace',
+    initials: 'A',
+    logo: Images.PredefinedLogo,
+    listIds: [0, 1],
+  },
 ];
 
 const boardSlice = createSlice({
@@ -15,7 +21,7 @@ const boardSlice = createSlice({
     createBoard: (state, action: PayloadAction<WorkspaceType>) => {
       const { id, name, initials, logo } = action.payload;
 
-      state.push({ id, name, initials, logo: logo || '' });
+      state.push({ id, name, initials, logo: logo || '', listIds: [] });
     },
     updateBoard: (state, action: PayloadAction<{ id: number; newName: string }>) => {
       const { id, newName } = action.payload;
