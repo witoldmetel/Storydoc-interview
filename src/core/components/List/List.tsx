@@ -4,7 +4,7 @@ import { clsx } from 'clsx';
 
 import { Plus } from '../../../assets/icons';
 import { useHover } from '../../hooks/useHover';
-import { updateList } from '../../store/slices/listSlice';
+import { deleteList, updateList } from '../../store/slices/listSlice';
 import { ActionButtons } from '../ActionButtons/ActionButtons';
 import { Button } from '../Button/Button';
 import { EditableListItem } from '../EditableListItem/EditableListItem';
@@ -47,7 +47,7 @@ export const List = ({ id, name, cards }: ListProps) => {
           >
             <h1>{name}</h1>
             {isHovering && !editMode ? (
-              <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={() => console.log('delete')} />
+              <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={() => dispatch(deleteList(id))} />
             ) : null}
           </div>
 
