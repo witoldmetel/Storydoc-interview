@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { clsx } from 'clsx';
 
 import { useHover } from '../../hooks/useHover';
-import { deleteBoard, updateBoard } from '../../store/slices/boardSlice';
+import { deleteBoard, setActiveBoard, updateBoard } from '../../store/slices/boardSlice';
 import { WorkspaceType } from '../../store/types';
 import { ActionButtons } from '../ActionButtons/ActionButtons';
 import { Button } from '../Button/Button';
@@ -13,12 +13,9 @@ import './WorkspaceItem.scss';
 
 type WorkspaceItemProps = {
   workspace: WorkspaceType;
-  activeWorkspace: number;
-
-  onClickItem: (workspaceId: number) => void;
 };
 
-export const WorkspaceItem = ({ workspace, activeWorkspace, onClickItem }: WorkspaceItemProps) => {
+export const WorkspaceItem = ({ workspace }: WorkspaceItemProps) => {
   const dispatch = useDispatch();
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
 
@@ -68,9 +65,9 @@ export const WorkspaceItem = ({ workspace, activeWorkspace, onClickItem }: Works
         'workspace-item',
         { hovered: isHovering && !editMode },
         { 'inactive-workspace': editMode },
-        { 'active-workspace': workspace.id === activeWorkspace }
+        { 'active-workspace': workspace.isActive }
       )}
-      onClick={() => onClickItem(workspace.id)}
+      onClick={() => dispatch(setActiveBoard(workspace.id))}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >

@@ -6,7 +6,6 @@ import { Plus, Tick } from '../../../assets/icons';
 import { createBoard } from '../../store/slices/boardSlice';
 import { Button } from '../Button/Button';
 import { EditableWorkspaceItem } from '../EditableWorkspaceItem/EditableWorkspaceItem';
-import { getWorkspaceInitials } from '../utils';
 
 import './WorkspaceCreator.scss';
 
@@ -29,15 +28,11 @@ export const WorkspaceCreator = ({ createMode, callback }: WorkspaceCreatorProps
 
   const handleWorkspaceCreate = () => {
     if (createMode) {
-      const date = new Date();
-      const workspaceId = date.getTime();
-
-      dispatch(createBoard({ id: workspaceId, name: workspaceName, initials: getWorkspaceInitials(workspaceName) }));
+      dispatch(createBoard({ name: workspaceName }));
       setWorkspaceName('');
-      callback(workspaceId);
-    } else {
-      callback();
     }
+
+    callback();
   };
 
   return (

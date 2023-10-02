@@ -17,7 +17,6 @@ const menuItems = [
 export const Sidebar = () => {
   const workspaces = useAppSelector((state) => state.board);
 
-  const [activeWorkspace, setActiveWorkspace] = useState(workspaces.length ? workspaces[0].id : 0);
   const [createMode, setCreateMode] = useState(false);
 
   return (
@@ -25,23 +24,10 @@ export const Sidebar = () => {
       <div className="sidebar-header">
         <div className="workspaces-wrapper" style={{ maxHeight: createMode ? '80%' : '94%' }}>
           {workspaces.length
-            ? workspaces.map((workspace) => (
-                <WorkspaceItem
-                  key={workspace.id}
-                  workspace={workspace}
-                  activeWorkspace={activeWorkspace}
-                  onClickItem={(id: number) => setActiveWorkspace(id)}
-                />
-              ))
+            ? workspaces.map((workspace) => <WorkspaceItem key={workspace.id} workspace={workspace} />)
             : null}
         </div>
-        <WorkspaceCreator
-          createMode={createMode}
-          callback={(workspaceId) => {
-            setCreateMode((prev) => !prev);
-            workspaceId && setActiveWorkspace(workspaceId);
-          }}
-        />
+        <WorkspaceCreator createMode={createMode} callback={() => setCreateMode((prev) => !prev)} />
       </div>
       <div className="sidebar-main">
         {menuItems.map((item) => (

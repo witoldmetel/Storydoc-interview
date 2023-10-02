@@ -2,6 +2,7 @@ export type WorkspaceType = {
   id: number;
   name: string;
   initials: string;
+  isActive: boolean;
   listIds: ListType['id'][];
 
   logo?: string;

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { RootState, useAppSelector } from '../store';
 import { ListType } from '../types';
 
 const initialState = [
@@ -36,3 +37,18 @@ const listSlice = createSlice({
 export const { addList, updateList, deleteList } = listSlice.actions;
 
 export default listSlice.reducer;
+
+/**
+ * SELECTORS
+ */
+export const useListsFromActiveBoard = () => {
+  return useAppSelector((state: RootState) => {
+    const activeBoardId = state.board.find((item) => item.isActive)?.id;
+
+    if (activeBoardId === null) {
+      return [];
+    }
+
+    return state.list.filter((list) => list.boardId === activeBoardId);
+  });
+};
