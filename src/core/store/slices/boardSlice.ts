@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import Images from '../../../assets/images';
 import { getWorkspaceInitials } from '../../components/utils';
+import { RootState } from '../store';
 import { WorkspaceType } from '../types';
 
 const initialState: WorkspaceType[] = [
@@ -68,3 +69,14 @@ const boardSlice = createSlice({
 export const { createBoard, updateBoard, deleteBoard, setActiveBoard } = boardSlice.actions;
 
 export default boardSlice.reducer;
+
+/**
+ * SELECTORS
+ */
+const selectBoards = (state: RootState) => {
+  return state.board;
+};
+
+export const selectActiveBoardId = createSelector([selectBoards], (boards) => {
+  return boards.find((item) => item.isActive)!.id;
+});

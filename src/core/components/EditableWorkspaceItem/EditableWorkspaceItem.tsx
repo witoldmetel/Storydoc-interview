@@ -28,6 +28,7 @@ export const EditableWorkspaceItem = ({
         maxLength={28}
         value={workspaceName}
         onChange={handleInputChange}
+        autoFocus
       />
     </div>
   );

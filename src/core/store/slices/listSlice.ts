@@ -12,10 +12,13 @@ const listSlice = createSlice({
   name: 'list',
   initialState,
   reducers: {
-    addList: (state, action: PayloadAction<ListType>) => {
+    addList: (state, action: PayloadAction<Pick<ListType, 'boardId' | 'name'>>) => {
       const { boardId, name } = action.payload;
 
-      state.push({ id: state.length, boardId, name, cards: [] });
+      const date = new Date();
+      const listId = date.getTime();
+
+      state.push({ id: listId, boardId, name, cards: [] });
     },
     updateList: (state, action: PayloadAction<{ id: number; newName: string }>) => {
       const { id, newName } = action.payload;
