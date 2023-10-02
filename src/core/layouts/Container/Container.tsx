@@ -10,9 +10,7 @@ export const Container = () => {
 
   return (
     <div className="container">
-      {lists.length
-        ? lists.map((list) => <List key={list.id} id={list.id} name={list.name} cards={list.cards} />)
-        : null}
+      {lists.length ? lists.map((list) => <List key={list.id} id={list.id} name={list.name} />) : null}
 
       <div>
         <ListCreator />

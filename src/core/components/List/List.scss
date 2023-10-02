@@ -9,7 +9,6 @@
   .list-name {
     display: flex;
     align-items: center;
-    width: fit-content;
 
     h1 {
       font-family: Inter;
@@ -30,7 +29,7 @@
     }
   }
 
-  &__card {
+  &__task {
     background: #fff;
     box-shadow: 0px 0px 1px 0px rgba(18, 3, 62, 0.1), 0px 1px 1px 0px rgba(18, 3, 62, 0.1);
     border-radius: 8px;

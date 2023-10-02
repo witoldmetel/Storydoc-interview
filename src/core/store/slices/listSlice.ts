@@ -3,9 +3,9 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { ListType } from '../types';
 
-const initialState = [
-  { id: 0, name: 'Working on', boardId: 0, cards: [] },
-  { id: 1, name: 'Review', boardId: 0, cards: [] },
+const initialState: ListType[] = [
+  { id: 0, name: 'Working on', boardId: 0, tasksIds: [0, 1] },
+  { id: 1, name: 'Review', boardId: 0, tasksIds: [0, 1, 2] },
 ];
 
 const listSlice = createSlice({
@@ -18,7 +18,7 @@ const listSlice = createSlice({
       const date = new Date();
       const listId = date.getTime();
 
-      state.push({ id: listId, boardId, name, cards: [] });
+      state.push({ id: listId, boardId, name, tasksIds: [] });
     },
     updateList: (state, action: PayloadAction<{ id: number; newName: string }>) => {
       const { id, newName } = action.payload;

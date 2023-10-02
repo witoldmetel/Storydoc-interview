@@ -12,10 +12,12 @@ export type ListType = {
   id: number;
   name: string;
   boardId: WorkspaceType['id'];
-  cards: CardType[];
+  tasksIds: TaskType['id'][];
 };
 
-export type CardType = {
+export type TaskType = {
   id: number;
   name: string;
+  listId: ListType['id'];
+  subtasks: TaskType[];
 };
