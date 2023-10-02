@@ -6,14 +6,28 @@
   grid-gap: 8px;
   padding: 8px;
 
-  h1 {
-    font-family: Inter;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 18px;
-    letter-spacing: 0em;
-    padding-left: 8px;
-    color: #001c39;
+  .list-name {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+
+    h1 {
+      font-family: Inter;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 18px;
+      letter-spacing: 0em;
+      padding-left: 8px;
+      color: #001c39;
+
+      &.hovered {
+        width: 150px;
+      }
+    }
+
+    &.hovered {
+      justify-content: space-between;
+    }
   }
 
   &__card {

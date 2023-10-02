@@ -5,6 +5,7 @@ import { Plus } from '../../../assets/icons';
 import { selectActiveBoardId } from '../../store/slices/boardSlice';
 import { addList } from '../../store/slices/listSlice';
 import { Button } from '../Button/Button';
+import { EditableListItem } from '../EditableListItem/EditableListItem';
 
 import './ListCreator.scss';
 
@@ -13,43 +14,18 @@ export const ListCreator = () => {
   const activeBoardId = useSelector(selectActiveBoardId);
 
   const [createMode, setCreateMode] = useState(false);
-  const [listName, setListName] = useState('');
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setListName(event.target.value);
-  };
-
-  const createNewList = () => {
-    if (listName) {
-      dispatch(
-        addList({
-          boardId: activeBoardId,
-          name: listName,
-        })
-      );
-      setListName('');
-    }
-
-    setCreateMode(false);
-  };
-
-  const handleInputKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.code === 'Enter') {
-      createNewList();
-    }
-  };
 
   return createMode ? (
-    <input
-      type="text"
-      className="list-input"
-      placeholder="Title of the new list..."
-      maxLength={28}
-      value={listName}
-      onChange={handleInputChange}
-      onBlur={createNewList}
-      onKeyDown={handleInputKeyPress}
-      autoFocus
+    <EditableListItem
+      confirmHandler={(listName) =>
+        dispatch(
+          addList({
+            boardId: activeBoardId,
+            name: listName,
+          })
+        )
+      }
+      callback={() => setCreateMode(false)}
     />
   ) : (
     <Button onClick={() => setCreateMode(true)} className="button-list-creator">
