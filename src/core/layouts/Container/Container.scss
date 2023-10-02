@@ -1,0 +1,30 @@
+.container {
+  display: grid;
+  grid-auto-columns: 294px;
+  grid-auto-flow: column;
+  grid-gap: 24px;
+  height: 100%;
+  overflow: auto;
+  margin-left: 24px;
+
+  &__board {
+    background: #ecf1fd;
+    border-radius: 16px;
+    display: grid;
+    grid-auto-rows: max-content;
+    grid-gap: 10px;
+    padding: 10px;
+
+    h1 {
+      font-size: 16px;
+      margin: 0 0 12px 0;
+    }
+
+    &__card {
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+      border-radius: 3px;
+      padding: 10px;
+    }
+  }
+}
