@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState, useAppSelector } from '../store';
+import { RootState } from '../store';
 import { ListType } from '../types';
 
 const initialState = [
@@ -41,14 +41,18 @@ export default listSlice.reducer;
 /**
  * SELECTORS
  */
-export const useListsFromActiveBoard = () => {
-  return useAppSelector((state: RootState) => {
-    const activeBoardId = state.board.find((item) => item.isActive)?.id;
-
-    if (activeBoardId === null) {
-      return [];
-    }
-
-    return state.list.filter((list) => list.boardId === activeBoardId);
-  });
+const selectActiveBoardId = (state: RootState) => {
+  return state.board.find((item) => item.isActive)?.id;
 };
+
+const selectLists = (state: RootState) => {
+  return state.list;
+};
+
+export const selectListsFromActiveBoard = createSelector([selectActiveBoardId, selectLists], (activeBoardId, lists) => {
+  if (activeBoardId === undefined) {
+    return [];
+  }
+
+  return lists.filter((list) => list.boardId === activeBoardId);
+});
