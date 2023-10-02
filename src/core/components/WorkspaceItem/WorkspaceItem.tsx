@@ -1,31 +1,76 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { clsx } from 'clsx';
 
 import { useHover } from '../../hooks/useHover';
+import { deleteBoard, updateBoard } from '../../store/slices/boardSlice';
 import { WorkspaceType } from '../../store/types';
 import { ActionButtons } from '../ActionButtons/ActionButtons';
+import { Button } from '../Button/Button';
+import { EditableWorkspaceItem } from '../EditableWorkspaceItem/EditableWorkspaceItem';
 
 import './WorkspaceItem.scss';
 
 type WorkspaceItemProps = {
-  editMode: boolean;
   workspace: WorkspaceType;
   activeWorkspace: number;
 
-  onClick: (workspaceId: number) => void;
+  onClickItem: (workspaceId: number) => void;
 };
 
-export const WorkspaceItem = ({ editMode, workspace, activeWorkspace, onClick }: WorkspaceItemProps) => {
+export const WorkspaceItem = ({ workspace, activeWorkspace, onClickItem }: WorkspaceItemProps) => {
+  const dispatch = useDispatch();
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
 
-  return (
+  const [editMode, setEditMode] = useState(false);
+  const [workspaceName, setWorkspaceName] = useState(workspace.name ?? '');
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setWorkspaceName(event.target.value);
+  };
+
+  const onDeleteClick = () => {
+    dispatch(deleteBoard(workspace.id));
+  };
+
+  const onConfirmUpdate = () => {
+    dispatch(updateBoard({ id: workspace.id, newName: workspaceName }));
+    setEditMode(false);
+  };
+
+  const onRejectUpdate = () => {
+    setEditMode(false);
+  };
+
+  return editMode ? (
+    <>
+      <EditableWorkspaceItem
+        workspaceName={workspaceName}
+        workspaceLogo={workspace.logo}
+        handleInputChange={handleInputChange}
+      />
+      <div className="action-buttons-edit-mode">
+        <Button
+          onClick={onConfirmUpdate}
+          disabled={!workspaceName}
+          className={clsx('action-button', 'update', { disabled: !workspaceName })}
+        >
+          Update
+        </Button>
+        <Button onClick={onRejectUpdate} className={clsx('action-button', 'reject', { disabled: !workspaceName })}>
+          Reject
+        </Button>
+      </div>
+    </>
+  ) : (
     <div
       className={clsx(
         'workspace-item',
         { hovered: isHovering && !editMode },
         { 'inactive-workspace': editMode },
-        { 'active-workspace': workspace.createdAt === activeWorkspace }
+        { 'active-workspace': workspace.id === activeWorkspace }
       )}
-      onClick={() => onClick(workspace.createdAt)}
+      onClick={() => onClickItem(workspace.id)}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
@@ -39,7 +84,7 @@ export const WorkspaceItem = ({ editMode, workspace, activeWorkspace, onClick }:
       </div>
 
       {isHovering && !editMode ? (
-        <ActionButtons onEditClick={() => console.log('edit')} onDeleteClick={() => console.log('delete')} />
+        <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={onDeleteClick} />
       ) : null}
     </div>
   );

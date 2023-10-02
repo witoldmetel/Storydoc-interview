@@ -3,35 +3,36 @@ import { useDispatch } from 'react-redux';
 import { clsx } from 'clsx';
 
 import { Plus, Tick } from '../../../assets/icons';
-import { addBoard } from '../../store/slices/boardSlice';
+import { createBoard } from '../../store/slices/boardSlice';
 import { Button } from '../Button/Button';
+import { EditableWorkspaceItem } from '../EditableWorkspaceItem/EditableWorkspaceItem';
+import { getWorkspaceInitials } from '../utils';
 
 import './WorkspaceCreator.scss';
 
 type WorkspaceCreatorProps = {
-  editMode: boolean;
+  createMode: boolean;
 
   callback: (workspaceId?: number) => void;
 };
 
-export const WorkspaceCreator = ({ editMode, callback }: WorkspaceCreatorProps) => {
+export const WorkspaceCreator = ({ createMode, callback }: WorkspaceCreatorProps) => {
   const dispatch = useDispatch();
 
   const [workspaceName, setWorkspaceName] = useState('');
 
-  const workspaceInitials = workspaceName ? workspaceName.charAt(0).toUpperCase() : '';
-  const isButtonDisabled = editMode ? workspaceName.trim() === '' : false;
+  const isButtonDisabled = createMode ? workspaceName.trim() === '' : false;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setWorkspaceName(event.target.value);
   };
 
   const handleWorkspaceCreate = () => {
-    if (editMode) {
+    if (createMode) {
       const date = new Date();
       const workspaceId = date.getTime();
 
-      dispatch(addBoard({ name: workspaceName, initials: workspaceInitials, createdAt: workspaceId }));
+      dispatch(createBoard({ id: workspaceId, name: workspaceName, initials: getWorkspaceInitials(workspaceName) }));
       setWorkspaceName('');
       callback(workspaceId);
     } else {
@@ -41,27 +42,17 @@ export const WorkspaceCreator = ({ editMode, callback }: WorkspaceCreatorProps) 
 
   return (
     <>
-      {editMode ? (
-        <div className="workspace-creator">
-          <span className="logo">{workspaceInitials}</span>
-          <input
-            type="text"
-            className="input-name"
-            placeholder="Workspace name"
-            maxLength={28}
-            value={workspaceName}
-            onChange={handleInputChange}
-          />
-        </div>
+      {createMode ? (
+        <EditableWorkspaceItem workspaceName={workspaceName} handleInputChange={handleInputChange} />
       ) : null}
       <Button
         onClick={handleWorkspaceCreate}
         disabled={isButtonDisabled}
-        className={clsx({ 'edit-mode': editMode }, { disabled: isButtonDisabled }, { enabled: !isButtonDisabled })}
+        className={clsx({ 'create-mode': createMode }, { disabled: isButtonDisabled }, { enabled: !isButtonDisabled })}
       >
         <div className="workspace-content">
-          {editMode ? <Tick color={isButtonDisabled ? '#594F78' : '#FFF'} /> : <Plus />}
-          <p className="workspace-content-name">{editMode ? 'Save new workspace' : 'Create workspace'}</p>
+          {createMode ? <Tick color={isButtonDisabled ? '#594F78' : '#FFF'} /> : <Plus />}
+          <p className="workspace-content-name">{createMode ? 'Save new workspace' : 'Create workspace'}</p>
         </div>
       </Button>
     </>

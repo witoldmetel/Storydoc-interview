@@ -1,7 +1,7 @@
 export type WorkspaceType = {
+  id: number;
   name: string;
   initials: string;
-  createdAt: number;
 
   logo?: string;
 };

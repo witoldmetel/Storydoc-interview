@@ -1,0 +1,38 @@
+.workspace-input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 64px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f4f7fe;
+  margin-bottom: 8px;
+
+  .logo {
+    min-width: 32px;
+    height: 32px;
+    margin-right: 12px;
+    background-color: #b3c4d6;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 32px;
+    color: #001c39;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .input-name {
+    color: #001c39;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px;
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+  }
+}
