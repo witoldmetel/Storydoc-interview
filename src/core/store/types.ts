@@ -19,5 +19,5 @@ export type TaskType = {
   id: number;
   name: string;
   listId: ListType['id'];
-  subtasks: TaskType[];
+  subtasks: Omit<TaskType, 'listId' | 'subtasks'>[];
 };

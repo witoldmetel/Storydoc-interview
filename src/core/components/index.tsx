@@ -1,7 +1,7 @@
 export { ActionButtons } from './ActionButtons/ActionButtons';
 export { Button } from './Button/Button';
-export { List } from './List/List';
 export { ListCreator } from './ListCreator/ListCreator';
+export { ListItem } from './ListItem/ListItem';
 export { UserProfile } from './UserProfile/UserProfile';
 export { WorkspaceCreator } from './WorkspaceCreator/WorkspaceCreator';
 export { WorkspaceItem } from './WorkspaceItem/WorkspaceItem';

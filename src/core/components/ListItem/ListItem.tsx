@@ -10,14 +10,14 @@ import { ActionButtons } from '../ActionButtons/ActionButtons';
 import { Button } from '../Button/Button';
 import { EditableListItem } from '../EditableListItem/EditableListItem';
 
-import './List.scss';
+import './ListItem.scss';
 
 type ListProps = {
   id: number;
   name: string;
 };
 
-export const List = ({ id, name }: ListProps) => {
+export const ListItem = ({ id, name }: ListProps) => {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => selectTasksFromList(state, id));
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
@@ -26,20 +26,20 @@ export const List = ({ id, name }: ListProps) => {
 
   return (
     <div>
-      {editMode ? (
-        <EditableListItem
-          confirmHandler={(listName) =>
-            dispatch(
-              updateList({
-                id,
-                newName: listName,
-              })
-            )
-          }
-          callback={() => setEditMode(false)}
-        />
-      ) : (
-        <div className="list">
+      <div className="list">
+        {editMode ? (
+          <EditableListItem
+            confirmHandler={(listName) =>
+              dispatch(
+                updateList({
+                  id,
+                  newName: listName,
+                })
+              )
+            }
+            callback={() => setEditMode(false)}
+          />
+        ) : (
           <div
             className={clsx('list-name', { hovered: isHovering && !editMode })}
             onMouseOver={handleMouseOver}
@@ -50,22 +50,22 @@ export const List = ({ id, name }: ListProps) => {
               <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={() => dispatch(deleteList(id))} />
             ) : null}
           </div>
+        )}
 
-          {tasks.length
-            ? tasks.map((task) => (
-                <div key={task.id} className="list__task">
-                  <p>{task.name}</p>
-                </div>
-              ))
-            : null}
-          <Button onClick={() => console.log('add new card')} className="button-card-creator">
-            <div className="card-creator-content">
-              <Plus color="#88819f" />
-              <p className="card-creator-name">Add a card</p>
-            </div>
-          </Button>
-        </div>
-      )}
+        {tasks.length
+          ? tasks.map((task) => (
+              <div key={task.id} className="list__task">
+                <p>{task.name}</p>
+              </div>
+            ))
+          : null}
+        <Button onClick={() => console.log('add new card')} className="button-card-creator">
+          <div className="card-creator-content">
+            <Plus color="#88819f" />
+            <p className="card-creator-name">Add a card</p>
+          </div>
+        </Button>
+      </div>
     </div>
   );
 };
