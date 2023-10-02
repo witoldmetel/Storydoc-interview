@@ -35,10 +35,20 @@ export const WorkspaceCreator = ({ createMode, callback }: WorkspaceCreatorProps
     callback();
   };
 
+  const handleInputKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.code === 'Enter') {
+      handleWorkspaceCreate();
+    }
+  };
+
   return (
     <>
       {createMode ? (
-        <EditableWorkspaceItem workspaceName={workspaceName} handleInputChange={handleInputChange} />
+        <EditableWorkspaceItem
+          workspaceName={workspaceName}
+          handleInputChange={handleInputChange}
+          onKeyDown={handleInputKeyPress}
+        />
       ) : null}
       <Button
         onClick={handleWorkspaceCreate}

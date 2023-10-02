@@ -7,12 +7,16 @@ type EditableWorkspaceItemProps = {
   workspaceLogo?: string;
 
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: VoidFunction;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 export const EditableWorkspaceItem = ({
   workspaceName,
   workspaceLogo,
   handleInputChange,
+  onBlur,
+  onKeyDown,
 }: EditableWorkspaceItemProps) => {
   return (
     <div className="workspace-input">
@@ -28,6 +32,8 @@ export const EditableWorkspaceItem = ({
         maxLength={28}
         value={workspaceName}
         onChange={handleInputChange}
+        onBlur={onBlur}
+        onKeyDown={onKeyDown}
         autoFocus
       />
     </div>

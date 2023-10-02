@@ -6,7 +6,6 @@ import { useHover } from '../../hooks/useHover';
 import { deleteBoard, setActiveBoard, updateBoard } from '../../store/slices/boardSlice';
 import { WorkspaceType } from '../../store/types';
 import { ActionButtons } from '../ActionButtons/ActionButtons';
-import { Button } from '../Button/Button';
 import { EditableWorkspaceItem } from '../EditableWorkspaceItem/EditableWorkspaceItem';
 
 import './WorkspaceItem.scss';
@@ -31,34 +30,27 @@ export const WorkspaceItem = ({ workspace }: WorkspaceItemProps) => {
   };
 
   const onConfirmUpdate = () => {
-    dispatch(updateBoard({ id: workspace.id, newName: workspaceName }));
+    if (workspaceName) {
+      dispatch(updateBoard({ id: workspace.id, newName: workspaceName }));
+    }
+
     setEditMode(false);
   };
 
-  const onRejectUpdate = () => {
-    setEditMode(false);
+  const handleInputKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.code === 'Enter') {
+      onConfirmUpdate();
+    }
   };
 
   return editMode ? (
-    <>
-      <EditableWorkspaceItem
-        workspaceName={workspaceName}
-        workspaceLogo={workspace.logo}
-        handleInputChange={handleInputChange}
-      />
-      <div className="action-buttons-edit-mode">
-        <Button
-          onClick={onConfirmUpdate}
-          disabled={!workspaceName}
-          className={clsx('action-button', 'update', { disabled: !workspaceName })}
-        >
-          Update
-        </Button>
-        <Button onClick={onRejectUpdate} className={clsx('action-button', 'reject', { disabled: !workspaceName })}>
-          Reject
-        </Button>
-      </div>
-    </>
+    <EditableWorkspaceItem
+      workspaceName={workspaceName}
+      workspaceLogo={workspace.logo}
+      handleInputChange={handleInputChange}
+      onBlur={onConfirmUpdate}
+      onKeyDown={handleInputKeyPress}
+    />
   ) : (
     <div
       className={clsx(
