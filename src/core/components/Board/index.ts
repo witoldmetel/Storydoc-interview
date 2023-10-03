@@ -1,3 +1,3 @@
-export { EditableWorkspaceItem } from './EditableWorkspaceItem/EditableWorkspaceItem';
-export { WorkspaceCreator } from './WorkspaceCreator/WorkspaceCreator';
-export { WorkspaceItem } from './WorkspaceItem/WorkspaceItem';
+export { BoardCreator } from './BoardCreator/BoardCreator';
+export { BoardItem } from './BoardItem/BoardItem';
+export { EditableBoardItem } from './EditableBoardItem/EditableBoardItem';

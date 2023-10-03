@@ -5,31 +5,31 @@ import { clsx } from 'clsx';
 import { Plus, Tick } from '../../../../assets/icons';
 import { createBoard } from '../../../store/slices/boardSlice';
 import { Button } from '../../Button/Button';
-import { EditableWorkspaceItem } from '../EditableWorkspaceItem/EditableWorkspaceItem';
+import { EditableBoardItem } from '../EditableBoardItem/EditableBoardItem';
 
-import './WorkspaceCreator.scss';
+import './BoardCreator.scss';
 
-type WorkspaceCreatorProps = {
+type BoardCreatorProps = {
   createMode: boolean;
 
-  callback: (workspaceId?: number) => void;
+  callback: (boardId?: number) => void;
 };
 
-export const WorkspaceCreator = ({ createMode, callback }: WorkspaceCreatorProps) => {
+export const BoardCreator = ({ createMode, callback }: BoardCreatorProps) => {
   const dispatch = useDispatch();
 
-  const [workspaceName, setWorkspaceName] = useState('');
+  const [boardName, setBoardName] = useState('');
 
-  const isButtonDisabled = createMode ? workspaceName.trim() === '' : false;
+  const isButtonDisabled = createMode ? boardName.trim() === '' : false;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setWorkspaceName(event.target.value);
+    setBoardName(event.target.value);
   };
 
-  const handleWorkspaceCreate = () => {
+  const handleBoardCreate = () => {
     if (createMode) {
-      dispatch(createBoard({ name: workspaceName }));
-      setWorkspaceName('');
+      dispatch(createBoard({ name: boardName }));
+      setBoardName('');
     }
 
     callback();
@@ -37,27 +37,27 @@ export const WorkspaceCreator = ({ createMode, callback }: WorkspaceCreatorProps
 
   const handleInputKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.code === 'Enter') {
-      handleWorkspaceCreate();
+      handleBoardCreate();
     }
   };
 
   return (
     <>
       {createMode ? (
-        <EditableWorkspaceItem
-          workspaceName={workspaceName}
+        <EditableBoardItem
+          boardName={boardName}
           handleInputChange={handleInputChange}
           onKeyDown={handleInputKeyPress}
         />
       ) : null}
       <Button
-        onClick={handleWorkspaceCreate}
+        onClick={handleBoardCreate}
         disabled={isButtonDisabled}
         className={clsx({ 'create-mode': createMode }, { disabled: isButtonDisabled }, { enabled: !isButtonDisabled })}
       >
-        <div className="workspace-content">
+        <div className="board-content">
           {createMode ? <Tick color={isButtonDisabled ? '#594F78' : '#FFF'} /> : <Plus />}
-          <p className="workspace-content-name">{createMode ? 'Save new workspace' : 'Create workspace'}</p>
+          <p className="board-content-name">{createMode ? 'Save new workspace' : 'Create workspace'}</p>
         </div>
       </Button>
     </>

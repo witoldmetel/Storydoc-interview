@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { clsx } from 'clsx';
 
 import { Boards, Home, Profile, Search, Settings } from '../../../assets/icons';
-import { UserProfile, WorkspaceCreator, WorkspaceItem } from '../../components';
+import { BoardCreator, BoardItem, UserProfile } from '../../components';
 import { useAppSelector } from '../../store/store';
 
 import './Sidebar.scss';
@@ -15,19 +15,17 @@ const menuItems = [
 ];
 
 export const Sidebar = () => {
-  const workspaces = useAppSelector((state) => state.board);
+  const boards = useAppSelector((state) => state.board);
 
   const [createMode, setCreateMode] = useState(false);
 
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <div className="workspaces-wrapper" style={{ maxHeight: createMode ? '80%' : '94%' }}>
-          {workspaces.length
-            ? workspaces.map((workspace) => <WorkspaceItem key={workspace.id} workspace={workspace} />)
-            : null}
+        <div className="boards-wrapper" style={{ maxHeight: createMode ? '80%' : '94%' }}>
+          {boards.length ? boards.map((board) => <BoardItem key={board.id} board={board} />) : null}
         </div>
-        <WorkspaceCreator createMode={createMode} callback={() => setCreateMode((prev) => !prev)} />
+        <BoardCreator createMode={createMode} callback={() => setCreateMode((prev) => !prev)} />
       </div>
       <div className="sidebar-main">
         {menuItems.map((item) => (

@@ -4,34 +4,34 @@ import { clsx } from 'clsx';
 
 import { useHover } from '../../../hooks/useHover';
 import { deleteBoard, setActiveBoard, updateBoard } from '../../../store/slices/boardSlice';
-import { WorkspaceType } from '../../../store/types';
+import { BoardType } from '../../../store/types';
 import { ActionButtons } from '../../ActionButtons/ActionButtons';
-import { EditableWorkspaceItem } from '../EditableWorkspaceItem/EditableWorkspaceItem';
+import { EditableBoardItem } from '../EditableBoardItem/EditableBoardItem';
 
-import './WorkspaceItem.scss';
+import './BoardItem.scss';
 
-type WorkspaceItemProps = {
-  workspace: WorkspaceType;
+type BoardItemProps = {
+  board: BoardType;
 };
 
-export const WorkspaceItem = ({ workspace }: WorkspaceItemProps) => {
+export const BoardItem = ({ board }: BoardItemProps) => {
   const dispatch = useDispatch();
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
 
   const [editMode, setEditMode] = useState(false);
-  const [workspaceName, setWorkspaceName] = useState(workspace.name ?? '');
+  const [boardName, setBoardName] = useState(board.name ?? '');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setWorkspaceName(event.target.value);
+    setBoardName(event.target.value);
   };
 
   const onDeleteClick = () => {
-    dispatch(deleteBoard(workspace.id));
+    dispatch(deleteBoard(board.id));
   };
 
   const onConfirmUpdate = () => {
-    if (workspaceName) {
-      dispatch(updateBoard({ id: workspace.id, newName: workspaceName }));
+    if (boardName) {
+      dispatch(updateBoard({ id: board.id, newName: boardName }));
     }
 
     setEditMode(false);
@@ -44,9 +44,9 @@ export const WorkspaceItem = ({ workspace }: WorkspaceItemProps) => {
   };
 
   return editMode ? (
-    <EditableWorkspaceItem
-      workspaceName={workspaceName}
-      workspaceLogo={workspace.logo}
+    <EditableBoardItem
+      boardName={boardName}
+      boardLogo={board.logo}
       handleInputChange={handleInputChange}
       onBlur={onConfirmUpdate}
       onKeyDown={handleInputKeyPress}
@@ -54,22 +54,18 @@ export const WorkspaceItem = ({ workspace }: WorkspaceItemProps) => {
   ) : (
     <div
       className={clsx(
-        'workspace-item',
+        'board-item',
         { hovered: isHovering && !editMode },
-        { 'inactive-workspace': editMode },
-        { 'active-workspace': workspace.isActive }
+        { 'inactive-board': editMode },
+        { 'active-board': board.isActive }
       )}
-      onClick={() => dispatch(setActiveBoard(workspace.id))}
+      onClick={() => dispatch(setActiveBoard(board.id))}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
-      <div className="workspace-item-content">
-        {workspace.logo ? (
-          <img src={workspace.logo} alt={workspace.name} />
-        ) : (
-          <span className="initials">{workspace.initials}</span>
-        )}
-        <span className={clsx({ hovered: isHovering && !editMode })}>{workspace.name}</span>
+      <div className="board-item-content">
+        {board.logo ? <img src={board.logo} alt={board.name} /> : <span className="initials">{board.initials}</span>}
+        <span className={clsx({ hovered: isHovering && !editMode })}>{board.name}</span>
       </div>
 
       {isHovering && !editMode ? (

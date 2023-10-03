@@ -1,4 +1,4 @@
-export type WorkspaceType = {
+export type BoardType = {
   id: number;
   name: string;
   initials: string;
@@ -11,7 +11,7 @@ export type WorkspaceType = {
 export type ListType = {
   id: number;
   name: string;
-  boardId: WorkspaceType['id'];
+  boardId: BoardType['id'];
   tasksIds: TaskType['id'][];
 };
 

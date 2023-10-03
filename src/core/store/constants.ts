@@ -1,6 +1,6 @@
 import Images from '../../assets/images';
 
-export const initialWorkspaceState = [
+export const initialBoardState = [
   {
     id: 0,
     name: 'Acme Corp workspace',

@@ -1,22 +1,22 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { getWorkspaceInitials } from '../../components/utils';
-import { initialWorkspaceState } from '../constants';
+import { getBoardInitials } from '../../components/utils';
+import { initialBoardState } from '../constants';
 import { RootState } from '../store';
-import { WorkspaceType } from '../types';
+import { BoardType } from '../types';
 
-const initialState: WorkspaceType[] = initialWorkspaceState;
+const initialState: BoardType[] = initialBoardState;
 
 const boardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    createBoard: (state, action: PayloadAction<Pick<WorkspaceType, 'name' | 'logo'>>) => {
+    createBoard: (state, action: PayloadAction<Pick<BoardType, 'name' | 'logo'>>) => {
       const { name, logo } = action.payload;
 
-      // generate unique id for workspace
+      // generate unique id for board
       const date = new Date();
-      const workspaceId = date.getTime();
+      const boardId = date.getTime();
 
       // Deactivate all existing boards
       state.forEach((board) => {
@@ -24,9 +24,9 @@ const boardSlice = createSlice({
       });
 
       state.push({
-        id: workspaceId,
+        id: boardId,
         name,
-        initials: getWorkspaceInitials(name),
+        initials: getBoardInitials(name),
         logo: logo || '',
         isActive: true,
         listIds: [],
@@ -39,7 +39,7 @@ const boardSlice = createSlice({
 
       if (boardIndex !== -1) {
         state[boardIndex].name = newName;
-        state[boardIndex].initials = getWorkspaceInitials(newName);
+        state[boardIndex].initials = getBoardInitials(newName);
       }
     },
     deleteBoard: (state, action: PayloadAction<number>) => {

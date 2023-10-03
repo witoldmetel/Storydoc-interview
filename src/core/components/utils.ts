@@ -1,3 +1,3 @@
-export function getWorkspaceInitials(workspaceName: string) {
-  return workspaceName ? workspaceName.charAt(0).toUpperCase() : '';
+export function getBoardInitials(boardName: string) {
+  return boardName ? boardName.charAt(0).toUpperCase() : '';
 }

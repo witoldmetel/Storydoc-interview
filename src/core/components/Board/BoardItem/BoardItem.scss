@@ -1,4 +1,4 @@
-.workspace-item {
+.board-item {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -7,7 +7,7 @@
   border-radius: 8px;
   margin-bottom: 8px;
 
-  .workspace-item-content {
+  .board-item-content {
     display: flex;
     align-items: center;
 
@@ -50,12 +50,12 @@
     }
   }
 
-  &.inactive-workspace {
+  &.inactive-board {
     opacity: 0.4;
     background: transparent;
   }
 
-  &.active-workspace {
+  &.active-board {
     background: #f4f7fe;
   }
 
