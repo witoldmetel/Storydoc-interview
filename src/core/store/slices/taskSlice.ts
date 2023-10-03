@@ -17,19 +17,19 @@ const initialState: TaskType[] = [
     subtasks: [],
   },
   {
-    id: 0,
+    id: 2,
     name: 'Task 3',
     listId: 1,
     subtasks: [],
   },
   {
-    id: 1,
+    id: 3,
     name: 'Task 4',
     listId: 1,
     subtasks: [],
   },
   {
-    id: 2,
+    id: 4,
     name: 'Task 5',
     listId: 1,
     subtasks: [],

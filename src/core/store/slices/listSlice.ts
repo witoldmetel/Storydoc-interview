@@ -5,7 +5,7 @@ import { ListType } from '../types';
 
 const initialState: ListType[] = [
   { id: 0, name: 'Working on', boardId: 0, tasksIds: [0, 1] },
-  { id: 1, name: 'Review', boardId: 0, tasksIds: [0, 1, 2] },
+  { id: 1, name: 'Review', boardId: 0, tasksIds: [2, 3, 4] },
 ];
 
 const listSlice = createSlice({
