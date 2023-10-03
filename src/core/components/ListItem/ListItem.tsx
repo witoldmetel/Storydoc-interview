@@ -54,7 +54,7 @@ export const ListItem = ({ id, name }: ListItemProps) => {
         )}
 
         {tasks.length ? tasks.map((task) => <TaskItem key={task.id} id={task.id} name={task.name} />) : null}
-        <TaskCreator />
+        <TaskCreator listId={id} />
       </div>
     </div>
   );

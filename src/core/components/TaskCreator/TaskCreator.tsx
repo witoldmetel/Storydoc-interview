@@ -1,17 +1,19 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { Plus } from '../../../assets/icons';
-import { selectActiveBoardId } from '../../store/slices/boardSlice';
-import { addList } from '../../store/slices/listSlice';
+import { addTask } from '../../store/slices/taskSlice';
 import { Button } from '../Button/Button';
 import { EditableTaskItem } from '../EditableTaskItem/EditableTaskItem';
 
 import './TaskCreator.scss';
 
-export const TaskCreator = () => {
+type TaskCreator = {
+  listId: number;
+};
+
+export const TaskCreator = ({ listId }: TaskCreator) => {
   const dispatch = useDispatch();
-  const activeBoardId = useSelector(selectActiveBoardId);
 
   const [createMode, setCreateMode] = useState(false);
 
@@ -19,11 +21,11 @@ export const TaskCreator = () => {
     <>
       {createMode ? (
         <EditableTaskItem
-          confirmHandler={(listName) =>
+          confirmHandler={(taskName) =>
             dispatch(
-              addList({
-                boardId: activeBoardId,
-                name: listName,
+              addTask({
+                listId,
+                name: taskName,
               })
             )
           }
