@@ -9,15 +9,16 @@ import { selectTasksFromList } from '../../store/slices/taskSlice';
 import { ActionButtons } from '../ActionButtons/ActionButtons';
 import { Button } from '../Button/Button';
 import { EditableListItem } from '../EditableListItem/EditableListItem';
+import { TaskItem } from '../TaskItem/TaskItem';
 
 import './ListItem.scss';
 
-type ListProps = {
+type ListItemProps = {
   id: number;
   name: string;
 };
 
-export const ListItem = ({ id, name }: ListProps) => {
+export const ListItem = ({ id, name }: ListItemProps) => {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => selectTasksFromList(state, id));
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
@@ -53,13 +54,7 @@ export const ListItem = ({ id, name }: ListProps) => {
           </div>
         )}
 
-        {tasks.length
-          ? tasks.map((task) => (
-              <div key={task.id} className="list__task">
-                <p>{task.name}</p>
-              </div>
-            ))
-          : null}
+        {tasks.length ? tasks.map((task) => <TaskItem key={task.id} id={task.id} name={task.name} />) : null}
         <Button onClick={() => console.log('add new card')} className="button-card-creator">
           <div className="card-creator-content">
             <Plus color="#88819f" />

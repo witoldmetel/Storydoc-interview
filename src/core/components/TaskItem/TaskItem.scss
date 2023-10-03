@@ -1,0 +1,24 @@
+.task-item {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0px 0px 1px 0px rgba(18, 3, 62, 0.1), 0px 1px 1px 0px rgba(18, 3, 62, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  height: 50px;
+
+  p {
+    color: #001c39;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+
+    &.hovered {
+      width: 150px;
+    }
+  }
+
+  &.hovered {
+    justify-content: space-between;
+  }
+}
