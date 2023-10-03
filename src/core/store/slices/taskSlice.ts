@@ -2,7 +2,7 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { initialTaskState } from '../constants';
 import { RootState } from '../store';
-import { TaskType } from '../types';
+import { SubtaskType, TaskType } from '../types';
 
 const initialState: TaskType[] = initialTaskState;
 
@@ -10,6 +10,9 @@ const taskSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
+    /**
+     * TASK
+     */
     addTask: (state, action: PayloadAction<Pick<TaskType, 'listId' | 'name'>>) => {
       const { listId, name } = action.payload;
 
@@ -32,10 +35,48 @@ const taskSlice = createSlice({
 
       return state.filter((task) => task.id !== taskIdToDelete);
     },
+
+    /**
+     * SUBTASK
+     */
+    addSubtask: (state, action: PayloadAction<{ taskId: number; subtask: SubtaskType }>) => {
+      const { taskId, subtask } = action.payload;
+
+      const task = state.find((task) => task.id === taskId);
+
+      if (task) {
+        task.subtasks.push(subtask);
+      }
+    },
+    updateSubtask: (
+      state,
+      action: PayloadAction<{ taskId: number; subtaskId: number; updatedSubtask: SubtaskType }>
+    ) => {
+      const { taskId, subtaskId, updatedSubtask } = action.payload;
+
+      const task = state.find((task) => task.id === taskId);
+
+      if (task) {
+        const subtaskIndex = task.subtasks.findIndex((subtask) => subtask.id === subtaskId);
+
+        if (subtaskIndex !== -1) {
+          task.subtasks[subtaskIndex] = updatedSubtask;
+        }
+      }
+    },
+    deleteSubtask: (state, action: PayloadAction<{ taskId: number; subtaskId: number }>) => {
+      const { taskId, subtaskId } = action.payload;
+
+      const task = state.find((task) => task.id === taskId);
+
+      if (task) {
+        task.subtasks = task.subtasks.filter((subtask) => subtask.id !== subtaskId);
+      }
+    },
   },
 });
 
-export const { addTask, updateTask, deleteTask } = taskSlice.actions;
+export const { addTask, updateTask, deleteTask, addSubtask, updateSubtask, deleteSubtask } = taskSlice.actions;
 
 export default taskSlice.reducer;
 
