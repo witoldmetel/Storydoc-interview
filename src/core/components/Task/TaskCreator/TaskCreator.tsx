@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Plus } from '../../../../assets/icons';
 import { addTask } from '../../../store/slices/taskSlice';
-import { Button } from '../../Button/Button';
+import { CreateTaskButton } from '../CreateTaskButton/CreateTaskButton';
 import { EditableTaskItem } from '../EditableTaskItem/EditableTaskItem';
 
-import './TaskCreator.scss';
-
 type TaskCreator = {
-  listId: number;
+  listId?: number;
 };
 
 export const TaskCreator = ({ listId }: TaskCreator) => {
@@ -21,23 +18,20 @@ export const TaskCreator = ({ listId }: TaskCreator) => {
     <>
       {createMode ? (
         <EditableTaskItem
-          confirmHandler={(taskName) =>
-            dispatch(
-              addTask({
-                listId,
-                name: taskName,
-              })
-            )
-          }
+          confirmHandler={(taskName) => {
+            if (listId) {
+              dispatch(
+                addTask({
+                  listId,
+                  name: taskName,
+                })
+              );
+            }
+          }}
           callback={() => setCreateMode(false)}
         />
       ) : null}
-      <Button onClick={() => setCreateMode(true)} className="button-card-creator">
-        <div className="card-creator-content">
-          <Plus color="#88819f" />
-          <p className="card-creator-name">Add a card</p>
-        </div>
-      </Button>
+      <CreateTaskButton placeholder="Add a card" onClick={() => setCreateMode(true)} />
     </>
   );
 };

@@ -39,13 +39,16 @@ const taskSlice = createSlice({
     /**
      * SUBTASK
      */
-    addSubtask: (state, action: PayloadAction<{ taskId: number; subtask: SubtaskType }>) => {
-      const { taskId, subtask } = action.payload;
+    addSubtask: (state, action: PayloadAction<{ taskId: number; name: string }>) => {
+      const { taskId, name } = action.payload;
+
+      const date = new Date();
+      const subtaskId = date.getTime();
 
       const task = state.find((task) => task.id === taskId);
 
       if (task) {
-        task.subtasks.push(subtask);
+        task.subtasks.push({ id: subtaskId, name });
       }
     },
     updateSubtask: (
