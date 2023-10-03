@@ -29,6 +29,7 @@ export const ListItem = ({ id, name }: ListProps) => {
       <div className="list">
         {editMode ? (
           <EditableListItem
+            name={name}
             confirmHandler={(listName) =>
               dispatch(
                 updateList({

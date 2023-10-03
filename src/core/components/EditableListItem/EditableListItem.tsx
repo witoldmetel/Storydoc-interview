@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import './EditableListItem.scss';
 
 type EditableListItemProps = {
+  name?: string;
+
   confirmHandler: (name: string) => void;
   callback: VoidFunction;
 };
 
-export const EditableListItem = ({ confirmHandler, callback }: EditableListItemProps) => {
-  const [listName, setListName] = useState('');
+export const EditableListItem = ({ name, confirmHandler, callback }: EditableListItemProps) => {
+  const [listName, setListName] = useState(name ?? '');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setListName(event.target.value);
