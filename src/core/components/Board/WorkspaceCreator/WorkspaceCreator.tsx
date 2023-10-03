@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { clsx } from 'clsx';
 
-import { Plus, Tick } from '../../../assets/icons';
-import { createBoard } from '../../store/slices/boardSlice';
-import { Button } from '../Button/Button';
+import { Plus, Tick } from '../../../../assets/icons';
+import { createBoard } from '../../../store/slices/boardSlice';
+import { Button } from '../../Button/Button';
 import { EditableWorkspaceItem } from '../EditableWorkspaceItem/EditableWorkspaceItem';
 
 import './WorkspaceCreator.scss';

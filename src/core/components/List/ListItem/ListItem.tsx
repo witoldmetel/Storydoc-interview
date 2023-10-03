@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clsx } from 'clsx';
 
-import { useHover } from '../../hooks/useHover';
-import { deleteList, updateList } from '../../store/slices/listSlice';
-import { selectTasksFromList } from '../../store/slices/taskSlice';
-import { ActionButtons } from '../ActionButtons/ActionButtons';
+import { useHover } from '../../../hooks/useHover';
+import { deleteList, updateList } from '../../../store/slices/listSlice';
+import { selectTasksFromList } from '../../../store/slices/taskSlice';
+import { ActionButtons } from '../../ActionButtons/ActionButtons';
+import { TaskCreator, TaskItem } from '../../Task';
 import { EditableListItem } from '../EditableListItem/EditableListItem';
-import { TaskCreator } from '../TaskCreator/TaskCreator';
-import { TaskItem } from '../TaskItem/TaskItem';
 
 import './ListItem.scss';
 

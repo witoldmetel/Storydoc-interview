@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { clsx } from 'clsx';
 
-import { useHover } from '../../hooks/useHover';
-import { deleteTask, updateTask } from '../../store/slices/taskSlice';
-import { ActionButtons } from '../ActionButtons/ActionButtons';
+import { useHover } from '../../../hooks/useHover';
+import { deleteTask, updateTask } from '../../../store/slices/taskSlice';
+import { ActionButtons } from '../../ActionButtons/ActionButtons';
 import { EditableTaskItem } from '../EditableTaskItem/EditableTaskItem';
 
 import './TaskItem.scss';

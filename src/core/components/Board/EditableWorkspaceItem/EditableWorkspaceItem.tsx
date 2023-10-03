@@ -1,4 +1,4 @@
-import { getWorkspaceInitials } from '../utils';
+import { getWorkspaceInitials } from '../../utils';
 
 import './EditableWorkspaceItem.scss';
 

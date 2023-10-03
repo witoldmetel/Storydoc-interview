@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Plus } from '../../../assets/icons';
-import { selectActiveBoardId } from '../../store/slices/boardSlice';
-import { addList } from '../../store/slices/listSlice';
-import { Button } from '../Button/Button';
+import { Plus } from '../../../../assets/icons';
+import { selectActiveBoardId } from '../../../store/slices/boardSlice';
+import { addList } from '../../../store/slices/listSlice';
+import { Button } from '../../Button/Button';
 import { EditableListItem } from '../EditableListItem/EditableListItem';
 
 import './ListCreator.scss';

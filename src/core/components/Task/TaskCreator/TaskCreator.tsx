@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Plus } from '../../../assets/icons';
-import { addTask } from '../../store/slices/taskSlice';
-import { Button } from '../Button/Button';
+import { Plus } from '../../../../assets/icons';
+import { addTask } from '../../../store/slices/taskSlice';
+import { Button } from '../../Button/Button';
 import { EditableTaskItem } from '../EditableTaskItem/EditableTaskItem';
 
 import './TaskCreator.scss';

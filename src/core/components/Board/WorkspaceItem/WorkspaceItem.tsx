@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { clsx } from 'clsx';
 
-import { useHover } from '../../hooks/useHover';
-import { deleteBoard, setActiveBoard, updateBoard } from '../../store/slices/boardSlice';
-import { WorkspaceType } from '../../store/types';
-import { ActionButtons } from '../ActionButtons/ActionButtons';
+import { useHover } from '../../../hooks/useHover';
+import { deleteBoard, setActiveBoard, updateBoard } from '../../../store/slices/boardSlice';
+import { WorkspaceType } from '../../../store/types';
+import { ActionButtons } from '../../ActionButtons/ActionButtons';
 import { EditableWorkspaceItem } from '../EditableWorkspaceItem/EditableWorkspaceItem';
 
 import './WorkspaceItem.scss';

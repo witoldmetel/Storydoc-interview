@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { clsx } from 'clsx';
 
-import { Boards, Home, Profile, Search } from '../../../assets/icons';
-import { UserProfile, WorkspaceCreator, WorkspaceItem, WorkspaceSettings } from '../../components';
+import { Boards, Home, Profile, Search, Settings } from '../../../assets/icons';
+import { UserProfile, WorkspaceCreator, WorkspaceItem } from '../../components';
 import { useAppSelector } from '../../store/store';
 
 import './Sidebar.scss';
@@ -39,7 +39,9 @@ export const Sidebar = () => {
       </div>
       <div className="sidebar-footer">
         <UserProfile />
-        <WorkspaceSettings />
+        <button className="workspace-settings">
+          <Settings />
+        </button>
       </div>
     </div>
   );
