@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-
-import { addSubtask } from '../../../store/slices/taskSlice';
-import { CreateTaskButton } from '../CreateTaskButton/CreateTaskButton';
 
 import './EditableTaskItem.scss';
 
 type EditableTaskItemProps = {
-  taskId?: number;
   name?: string;
 
   confirmHandler: (name: string) => void;
   callback: VoidFunction;
 };
 
-export const EditableTaskItem = ({ taskId, name, confirmHandler, callback }: EditableTaskItemProps) => {
-  const dispatch = useDispatch();
-
+export const EditableTaskItem = ({ name, confirmHandler, callback }: EditableTaskItemProps) => {
   const [taskName, setTaskName] = useState(name ?? '');
-  const [createSubtaskMode, setCreateSubtaskMode] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTaskName(event.target.value);
@@ -48,11 +40,12 @@ export const EditableTaskItem = ({ taskId, name, confirmHandler, callback }: Edi
         maxLength={28}
         value={taskName}
         onChange={handleInputChange}
-        // onBlur={createNewCard}
+        onBlur={createNewCard}
         onKeyDown={handleInputKeyPress}
         autoFocus
       />
-      {createSubtaskMode ? (
+      {/* @todo: Prepare subtask section */}
+      {/* {createSubtaskMode ? (
         <EditableTaskItem
           confirmHandler={(taskName) => {
             if (taskId) {
@@ -67,7 +60,7 @@ export const EditableTaskItem = ({ taskId, name, confirmHandler, callback }: Edi
           callback={() => setCreateSubtaskMode(false)}
         />
       ) : null}
-      <CreateTaskButton placeholder="Add a subtask" onClick={() => setCreateSubtaskMode(true)} />
+      <CreateTaskButton placeholder="Add a subtask" onClick={() => setCreateSubtaskMode(true)} /> */}
     </>
   );
 };

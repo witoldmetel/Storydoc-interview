@@ -22,7 +22,6 @@ export const TaskItem = ({ id, name }: TaskItemProps) => {
 
   return editMode ? (
     <EditableTaskItem
-      taskId={id}
       name={name}
       confirmHandler={(taskName) =>
         dispatch(
