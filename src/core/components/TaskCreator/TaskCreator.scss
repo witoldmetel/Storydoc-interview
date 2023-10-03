@@ -1,0 +1,28 @@
+.button-card-creator {
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+  display: grid;
+
+  .card-creator-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+
+    .card-creator-name {
+      margin-left: 4px;
+      color: #88819f;
+      font-family: Inter;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 20px;
+      letter-spacing: 0em;
+    }
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

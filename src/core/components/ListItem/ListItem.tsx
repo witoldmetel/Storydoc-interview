@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clsx } from 'clsx';
 
-import { Plus } from '../../../assets/icons';
 import { useHover } from '../../hooks/useHover';
 import { deleteList, updateList } from '../../store/slices/listSlice';
 import { selectTasksFromList } from '../../store/slices/taskSlice';
 import { ActionButtons } from '../ActionButtons/ActionButtons';
-import { Button } from '../Button/Button';
 import { EditableListItem } from '../EditableListItem/EditableListItem';
+import { TaskCreator } from '../TaskCreator/TaskCreator';
 import { TaskItem } from '../TaskItem/TaskItem';
 
 import './ListItem.scss';
@@ -55,12 +54,7 @@ export const ListItem = ({ id, name }: ListItemProps) => {
         )}
 
         {tasks.length ? tasks.map((task) => <TaskItem key={task.id} id={task.id} name={task.name} />) : null}
-        <Button onClick={() => console.log('add new card')} className="button-card-creator">
-          <div className="card-creator-content">
-            <Plus color="#88819f" />
-            <p className="card-creator-name">Add a card</p>
-          </div>
-        </Button>
+        <TaskCreator />
       </div>
     </div>
   );
