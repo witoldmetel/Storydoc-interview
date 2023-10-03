@@ -1,20 +1,11 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import Images from '../../../assets/images';
 import { getWorkspaceInitials } from '../../components/utils';
+import { initialWorkspaceState } from '../constants';
 import { RootState } from '../store';
 import { WorkspaceType } from '../types';
 
-const initialState: WorkspaceType[] = [
-  {
-    id: 0,
-    name: 'Acme Corp workspace',
-    initials: 'A',
-    logo: Images.PredefinedLogo,
-    isActive: true,
-    listIds: [0, 1],
-  },
-];
+const initialState: WorkspaceType[] = initialWorkspaceState;
 
 const boardSlice = createSlice({
   name: 'board',

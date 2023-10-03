@@ -1,40 +1,10 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { initialTaskState } from '../constants';
 import { RootState } from '../store';
 import { TaskType } from '../types';
 
-const initialState: TaskType[] = [
-  {
-    id: 0,
-    name: 'Task 1',
-    listId: 0,
-    subtasks: [],
-  },
-  {
-    id: 1,
-    name: 'Task 2',
-    listId: 0,
-    subtasks: [],
-  },
-  {
-    id: 2,
-    name: 'Task 3',
-    listId: 1,
-    subtasks: [],
-  },
-  {
-    id: 3,
-    name: 'Task 4',
-    listId: 1,
-    subtasks: [],
-  },
-  {
-    id: 4,
-    name: 'Task 5',
-    listId: 1,
-    subtasks: [],
-  },
-];
+const initialState: TaskType[] = initialTaskState;
 
 const taskSlice = createSlice({
   name: 'tasks',
@@ -72,7 +42,6 @@ export default taskSlice.reducer;
 /**
  * SELECTORS
  */
-
 const selectTasks = (state: RootState) => {
   return state.task;
 };
