@@ -45,6 +45,8 @@ const boardSlice = createSlice({
     deleteBoard: (state, action: PayloadAction<number>) => {
       const boardId = action.payload;
 
+      setActiveBoard(null);
+
       return state.filter((board) => board.id !== boardId);
     },
     setActiveBoard: (state, action: PayloadAction<number | null>) => {
@@ -69,5 +71,5 @@ const selectBoards = (state: RootState) => {
 };
 
 export const selectActiveBoardId = createSelector([selectBoards], (boards) => {
-  return boards.find((item) => item.isActive)!.id;
+  return boards.find((item) => item.isActive)?.id ?? null;
 });

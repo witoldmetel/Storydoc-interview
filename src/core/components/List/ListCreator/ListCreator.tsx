@@ -17,14 +17,16 @@ export const ListCreator = () => {
 
   return createMode ? (
     <EditableListItem
-      confirmHandler={(listName) =>
-        dispatch(
-          addList({
-            boardId: activeBoardId,
-            name: listName,
-          })
-        )
-      }
+      confirmHandler={(listName) => {
+        if (activeBoardId) {
+          dispatch(
+            addList({
+              boardId: activeBoardId,
+              name: listName,
+            })
+          );
+        }
+      }}
       callback={() => setCreateMode(false)}
     />
   ) : (
