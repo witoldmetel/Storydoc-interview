@@ -1,0 +1,9 @@
+.boards-container {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 94%;
+
+  &.createMode {
+    max-height: 78.5%;
+  }
+}

@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { clsx } from 'clsx';
 
 import { Boards, Home, Profile, Search, Settings } from '../../../assets/icons';
-import { BoardCreator, BoardItem, UserProfile } from '../../components';
-import { useAppSelector } from '../../store/store';
+import { BoardCreator, BoardsContainer, UserProfile } from '../../components';
 
 import './Sidebar.scss';
 
@@ -15,16 +14,12 @@ const menuItems = [
 ];
 
 export const Sidebar = () => {
-  const boards = useAppSelector((state) => state.board);
-
   const [createMode, setCreateMode] = useState(false);
 
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <div className="boards-wrapper" style={{ maxHeight: createMode ? '80%' : '94%' }}>
-          {boards.length ? boards.map((board) => <BoardItem key={board.id} board={board} />) : null}
-        </div>
+        <BoardsContainer createMode={createMode} />
         <BoardCreator createMode={createMode} callback={() => setCreateMode((prev) => !prev)} />
       </div>
       <div className="sidebar-main">

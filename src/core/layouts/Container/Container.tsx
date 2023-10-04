@@ -10,7 +10,7 @@ export const Container = () => {
   const activeBoardId = useSelector(selectActiveBoardId);
   const lists = useSelector(selectListsFromActiveBoard);
 
-  return activeBoardId !== undefined ? (
+  return activeBoardId != null ? (
     <div className="container">
       {lists.length ? lists.map((list) => <ListItem key={list.id} id={list.id} name={list.name} />) : null}
 
