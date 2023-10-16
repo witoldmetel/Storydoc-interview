@@ -13,13 +13,13 @@ const taskSlice = createSlice({
     /**
      * TASK
      */
-    addTask: (state, action: PayloadAction<Pick<TaskType, 'listId' | 'name'>>) => {
-      const { listId, name } = action.payload;
+    addTask: (state, action: PayloadAction<Pick<TaskType, 'listId' | 'boardId' | 'name'>>) => {
+      const { listId, boardId, name } = action.payload;
 
       // generate unique id for board
       const taskId = nanoid();
 
-      state.push({ id: taskId, listId, name, subtasks: [] });
+      state.push({ id: taskId, listId, boardId, name, subtasks: [] });
     },
     updateTask: (state, action: PayloadAction<{ id: string; newName: string }>) => {
       const { id, newName } = action.payload;
@@ -48,7 +48,12 @@ const taskSlice = createSlice({
       const task = state.find((task) => task.id === taskId);
 
       if (task) {
-        task.subtasks.push({ id: subtaskId, name });
+        task.subtasks.push({
+          id: subtaskId,
+          name,
+          // @todo: Add proper boardId
+          boardId: '',
+        });
       }
     },
     updateSubtask: (
@@ -75,6 +80,18 @@ const taskSlice = createSlice({
       if (task) {
         task.subtasks = task.subtasks.filter((subtask) => subtask.id !== subtaskId);
       }
+    },
+  },
+  extraReducers: {
+    ['board/deleteBoard']: (state, action) => {
+      const boardId = action.payload;
+
+      return state.filter((list) => list.boardId !== boardId);
+    },
+    ['list/deleteList']: (state, action) => {
+      const listId = action.payload;
+
+      return state.filter((task) => task.listId !== listId);
     },
   },
 });

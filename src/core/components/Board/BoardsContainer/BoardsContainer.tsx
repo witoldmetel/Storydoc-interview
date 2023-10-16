@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
 import { useDispatch } from 'react-redux';
 import {
   closestCorners,
@@ -75,10 +74,7 @@ export const BoardsContainer = ({ createMode }: BoardsContainerProps) => {
             : null}
         </div>
       </SortableContext>
-      {createPortal(
-        <DragOverlay>{activeBoard && <BoardItem board={activeBoard} isDragging />}</DragOverlay>,
-        document.body
-      )}
+      <DragOverlay>{activeBoard && <BoardItem board={activeBoard} isDragging />}</DragOverlay>
     </DndContext>
   );
 };

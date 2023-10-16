@@ -22,6 +22,7 @@ export type ListType = {
 export type TaskType = {
   id: string;
   name: string;
+  boardId: BoardType['id'];
   listId: ListType['id'];
   subtasks: SubtaskType[];
 };

@@ -33,6 +33,13 @@ const listSlice = createSlice({
       return state.filter((list) => list.id !== listIdToDelete);
     },
   },
+  extraReducers: {
+    ['board/deleteBoard']: (state, action) => {
+      const boardId = action.payload;
+
+      return state.filter((list) => list.boardId !== boardId);
+    },
+  },
 });
 
 export const { addList, updateList, deleteList } = listSlice.actions;

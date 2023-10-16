@@ -48,7 +48,7 @@ const boardSlice = createSlice({
     setActiveBoard: (state, action: PayloadAction<string | null>) => {
       state.activeBoardId = action.payload;
     },
-    reorderBoards: (state, action) => {
+    reorderBoards: (state, action: PayloadAction<BoardType[]>) => {
       return {
         ...state,
         boards: action.payload,

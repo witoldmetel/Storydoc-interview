@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { selectActiveBoardId } from '../../../store/slices/boardSlice';
 import { addTask } from '../../../store/slices/taskSlice';
 import { AppDispatch } from '../../../store/store';
 import { CreateTaskButton } from '../CreateTaskButton/CreateTaskButton';
@@ -12,6 +13,7 @@ type TaskCreator = {
 
 export const TaskCreator = ({ listId }: TaskCreator) => {
   const dispatch = useDispatch<AppDispatch>();
+  const activeBoardId = useSelector(selectActiveBoardId);
 
   const [createMode, setCreateMode] = useState(false);
 
@@ -24,6 +26,7 @@ export const TaskCreator = ({ listId }: TaskCreator) => {
               dispatch(
                 addTask({
                   listId,
+                  boardId: activeBoardId!,
                   name: taskName,
                 })
               );
