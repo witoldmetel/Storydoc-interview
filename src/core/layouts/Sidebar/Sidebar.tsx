@@ -22,6 +22,7 @@ export const Sidebar = () => {
         <BoardsContainer createMode={createMode} />
         <BoardCreator createMode={createMode} callback={() => setCreateMode((prev) => !prev)} />
       </div>
+
       <div className="sidebar-main">
         {menuItems.map((item) => (
           <div key={item.title} className="menu-item">
@@ -30,6 +31,7 @@ export const Sidebar = () => {
           </div>
         ))}
       </div>
+
       <div className="sidebar-footer">
         <UserProfile />
         <button className="workspace-settings">

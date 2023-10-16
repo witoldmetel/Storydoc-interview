@@ -32,6 +32,9 @@ const listSlice = createSlice({
 
       return state.filter((list) => list.id !== listIdToDelete);
     },
+    reorderLists: (_, action: PayloadAction<ListType[]>) => {
+      return action.payload;
+    },
   },
   extraReducers: {
     ['board/deleteBoard']: (state, action) => {
@@ -42,7 +45,7 @@ const listSlice = createSlice({
   },
 });
 
-export const { addList, updateList, deleteList } = listSlice.actions;
+export const { addList, updateList, deleteList, reorderLists } = listSlice.actions;
 
 export default listSlice.reducer;
 

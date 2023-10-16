@@ -7,7 +7,6 @@ import {
   DragOverlay,
   DragStartEvent,
   PointerSensor,
-  useDroppable,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
@@ -28,10 +27,7 @@ type BoardsContainerProps = {
 
 export const BoardsContainer = ({ createMode }: BoardsContainerProps) => {
   const dispatch = useDispatch<AppDispatch>();
-
   const { boards } = useAppSelector((state) => state.board);
-  const { setNodeRef } = useDroppable({ id: 'boards-drop-area' });
-
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -64,7 +60,7 @@ export const BoardsContainer = ({ createMode }: BoardsContainerProps) => {
   return (
     <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={onDragEnd} onDragStart={onDragStart}>
       <SortableContext id="boards-drop-area" items={boards} strategy={verticalListSortingStrategy}>
-        <div ref={setNodeRef} className={clsx('boards-container', { createMode: createMode })}>
+        <div className={clsx('boards-container', { createMode: createMode })}>
           {boards.length
             ? boards.map((board) => (
                 <SortableItem key={board.id} id={board.id} type={DRAGGABLE_TYPE.BOARD} additionalData={board}>

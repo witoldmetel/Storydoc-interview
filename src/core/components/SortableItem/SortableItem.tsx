@@ -7,8 +7,9 @@ import { DraggableType } from '../../store/types';
 type SortableItemProps = {
   id: string;
   type: DraggableType;
-  additionalData: unknown;
   children: React.ReactNode;
+
+  additionalData?: unknown;
 };
 
 export const SortableItem = ({ id, type, children, additionalData }: SortableItemProps) => {
