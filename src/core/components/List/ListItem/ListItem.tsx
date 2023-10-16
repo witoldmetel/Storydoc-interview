@@ -13,7 +13,7 @@ import { EditableListItem } from '../EditableListItem/EditableListItem';
 import './ListItem.scss';
 
 type ListItemProps = {
-  id: number;
+  id: string;
   name: string;
 };
 

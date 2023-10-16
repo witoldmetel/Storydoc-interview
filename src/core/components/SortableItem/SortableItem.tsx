@@ -5,7 +5,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { DraggableType } from '../../store/types';
 
 type SortableItemProps = {
-  id: number;
+  id: string;
   type: DraggableType;
   additionalData: unknown;
   children: React.ReactNode;

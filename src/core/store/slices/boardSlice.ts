@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 
 import { getBoardInitials } from '../../components/utils';
 import { initialBoardState } from '../constants';
@@ -15,8 +15,7 @@ const boardSlice = createSlice({
       const { name, logo } = action.payload;
 
       // generate unique id for board
-      const date = new Date();
-      const boardId = date.getTime();
+      const boardId = nanoid();
 
       state.activeBoardId = boardId;
 
@@ -28,7 +27,7 @@ const boardSlice = createSlice({
         listIds: [],
       });
     },
-    updateBoard: (state, action: PayloadAction<{ id: number; newName: string }>) => {
+    updateBoard: (state, action: PayloadAction<{ id: string; newName: string }>) => {
       const { id, newName } = action.payload;
 
       const boardIndex = state.boards.findIndex((board) => board.id === id);
@@ -38,7 +37,7 @@ const boardSlice = createSlice({
         state.boards[boardIndex].initials = getBoardInitials(newName);
       }
     },
-    deleteBoard: (state, action: PayloadAction<number>) => {
+    deleteBoard: (state, action: PayloadAction<string>) => {
       const boardId = action.payload;
 
       return {
@@ -46,7 +45,7 @@ const boardSlice = createSlice({
         boards: state.boards.filter((board) => board.id !== boardId),
       };
     },
-    setActiveBoard: (state, action: PayloadAction<number | null>) => {
+    setActiveBoard: (state, action: PayloadAction<string | null>) => {
       state.activeBoardId = action.payload;
     },
     reorderBoards: (state, action) => {

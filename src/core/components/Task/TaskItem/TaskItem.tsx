@@ -11,7 +11,7 @@ import { EditableTaskItem } from '../EditableTaskItem/EditableTaskItem';
 import './TaskItem.scss';
 
 type TaskItemProps = {
-  id: number;
+  id: string;
   name: string;
 };
 

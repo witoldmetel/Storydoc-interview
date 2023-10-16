@@ -7,7 +7,7 @@ import { CreateTaskButton } from '../CreateTaskButton/CreateTaskButton';
 import { EditableTaskItem } from '../EditableTaskItem/EditableTaskItem';
 
 type TaskCreator = {
-  listId?: number;
+  listId?: string;
 };
 
 export const TaskCreator = ({ listId }: TaskCreator) => {

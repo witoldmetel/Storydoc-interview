@@ -1,4 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 
 import { initialTaskState } from '../constants';
 import { RootState } from '../store';
@@ -16,12 +16,12 @@ const taskSlice = createSlice({
     addTask: (state, action: PayloadAction<Pick<TaskType, 'listId' | 'name'>>) => {
       const { listId, name } = action.payload;
 
-      const date = new Date();
-      const taskId = date.getTime();
+      // generate unique id for board
+      const taskId = nanoid();
 
       state.push({ id: taskId, listId, name, subtasks: [] });
     },
-    updateTask: (state, action: PayloadAction<{ id: number; newName: string }>) => {
+    updateTask: (state, action: PayloadAction<{ id: string; newName: string }>) => {
       const { id, newName } = action.payload;
 
       const taskIndex = state.findIndex((task) => task.id === id);
@@ -30,7 +30,7 @@ const taskSlice = createSlice({
         state[taskIndex].name = newName;
       }
     },
-    deleteTask: (state, action: PayloadAction<number>) => {
+    deleteTask: (state, action: PayloadAction<string>) => {
       const taskIdToDelete = action.payload;
 
       return state.filter((task) => task.id !== taskIdToDelete);
@@ -39,11 +39,11 @@ const taskSlice = createSlice({
     /**
      * SUBTASK
      */
-    addSubtask: (state, action: PayloadAction<{ taskId: number; name: string }>) => {
+    addSubtask: (state, action: PayloadAction<{ taskId: string; name: string }>) => {
       const { taskId, name } = action.payload;
 
-      const date = new Date();
-      const subtaskId = date.getTime();
+      // generate unique id for board
+      const subtaskId = nanoid();
 
       const task = state.find((task) => task.id === taskId);
 
@@ -53,7 +53,7 @@ const taskSlice = createSlice({
     },
     updateSubtask: (
       state,
-      action: PayloadAction<{ taskId: number; subtaskId: number; updatedSubtask: SubtaskType }>
+      action: PayloadAction<{ taskId: string; subtaskId: string; updatedSubtask: SubtaskType }>
     ) => {
       const { taskId, subtaskId, updatedSubtask } = action.payload;
 
@@ -67,7 +67,7 @@ const taskSlice = createSlice({
         }
       }
     },
-    deleteSubtask: (state, action: PayloadAction<{ taskId: number; subtaskId: number }>) => {
+    deleteSubtask: (state, action: PayloadAction<{ taskId: string; subtaskId: string }>) => {
       const { taskId, subtaskId } = action.payload;
 
       const task = state.find((task) => task.id === taskId);
@@ -90,6 +90,6 @@ const selectTasks = (state: RootState) => {
   return state.task;
 };
 
-export const selectTasksFromList = createSelector([selectTasks, (_, listId: number) => listId], (tasks, listId) =>
+export const selectTasksFromList = createSelector([selectTasks, (_, listId: string) => listId], (tasks, listId) =>
   tasks.filter((task) => task.listId === listId)
 );

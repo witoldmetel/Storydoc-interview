@@ -1,4 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 
 import { initialListState } from '../constants';
 import { RootState } from '../store';
@@ -13,12 +13,12 @@ const listSlice = createSlice({
     addList: (state, action: PayloadAction<Pick<ListType, 'boardId' | 'name'>>) => {
       const { boardId, name } = action.payload;
 
-      const date = new Date();
-      const listId = date.getTime();
+      // generate unique id for board
+      const listId = nanoid();
 
       state.push({ id: listId, boardId, name, tasksIds: [] });
     },
-    updateList: (state, action: PayloadAction<{ id: number; newName: string }>) => {
+    updateList: (state, action: PayloadAction<{ id: string; newName: string }>) => {
       const { id, newName } = action.payload;
 
       const listIndex = state.findIndex((list) => list.id === id);
@@ -27,7 +27,7 @@ const listSlice = createSlice({
         state[listIndex].name = newName;
       }
     },
-    deleteList: (state, action: PayloadAction<number>) => {
+    deleteList: (state, action: PayloadAction<string>) => {
       const listIdToDelete = action.payload;
 
       return state.filter((list) => list.id !== listIdToDelete);

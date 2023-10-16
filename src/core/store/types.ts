@@ -1,10 +1,10 @@
 export type BoardSliceType = {
-  activeBoardId: number | null;
+  activeBoardId: string | null;
   boards: BoardType[];
 };
 
 export type BoardType = {
-  id: number;
+  id: string;
   name: string;
   initials: string;
   listIds: ListType['id'][];
@@ -13,14 +13,14 @@ export type BoardType = {
 };
 
 export type ListType = {
-  id: number;
+  id: string;
   name: string;
   boardId: BoardType['id'];
   tasksIds: TaskType['id'][];
 };
 
 export type TaskType = {
-  id: number;
+  id: string;
   name: string;
   listId: ListType['id'];
   subtasks: SubtaskType[];
