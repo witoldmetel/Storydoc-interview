@@ -75,7 +75,10 @@ export const BoardsContainer = ({ createMode }: BoardsContainerProps) => {
             : null}
         </div>
       </SortableContext>
-      {createPortal(<DragOverlay>{activeBoard && <BoardItem board={activeBoard} />}</DragOverlay>, document.body)}
+      {createPortal(
+        <DragOverlay>{activeBoard && <BoardItem board={activeBoard} isDragging />}</DragOverlay>,
+        document.body
+      )}
     </DndContext>
   );
 };

@@ -13,9 +13,10 @@ import './BoardItem.scss';
 
 type BoardItemProps = {
   board: BoardType;
+  isDragging?: boolean;
 };
 
-export const BoardItem = ({ board }: BoardItemProps) => {
+export const BoardItem = ({ board, isDragging }: BoardItemProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const activeBoardId = useSelector(selectActiveBoardId);
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
@@ -45,6 +46,8 @@ export const BoardItem = ({ board }: BoardItemProps) => {
     }
   };
 
+  const hovered = isHovering && !editMode && !isDragging;
+
   return editMode ? (
     <EditableBoardItem
       boardName={boardName}
@@ -57,7 +60,7 @@ export const BoardItem = ({ board }: BoardItemProps) => {
     <div
       className={clsx(
         'board-item',
-        { hovered: isHovering && !editMode },
+        { hovered: hovered },
         { 'inactive-board': editMode },
         { 'active-board': activeBoardId === board.id }
       )}
@@ -67,12 +70,10 @@ export const BoardItem = ({ board }: BoardItemProps) => {
     >
       <div className="board-item-content">
         {board.logo ? <img src={board.logo} alt={board.name} /> : <span className="initials">{board.initials}</span>}
-        <span className={clsx({ hovered: isHovering && !editMode })}>{board.name}</span>
+        <span className={clsx({ hovered: hovered })}>{board.name}</span>
       </div>
 
-      {isHovering && !editMode ? (
-        <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={onDeleteClick} />
-      ) : null}
+      {hovered ? <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={onDeleteClick} /> : null}
     </div>
   );
 };

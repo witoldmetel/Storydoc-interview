@@ -30,8 +30,9 @@ export const SortableItem = ({ id, type, children, additionalData }: SortableIte
   // @todo: Check if you have to pass additional props to children
   // const childrenWithProps = React.Children.map(children, (child) => {
   //   if (React.isValidElement(child)) {
-  //     return React.cloneElement(child, { ...listeners });
+  //     return React.cloneElement(child, { isDragging } as React.HTMLProps<HTMLDivElement>);
   //   }
+
   //   return child;
   // });
 
