@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clsx } from 'clsx';
 
 import { useHover } from '../../../hooks/useHover';
-import { deleteBoard, setActiveBoard, updateBoard } from '../../../store/slices/boardSlice';
+import { deleteBoard, selectActiveBoardId, setActiveBoard, updateBoard } from '../../../store/slices/boardSlice';
+import { AppDispatch } from '../../../store/store';
 import { BoardType } from '../../../store/types';
 import { ActionButtons } from '../../ActionButtons/ActionButtons';
 import { EditableBoardItem } from '../EditableBoardItem/EditableBoardItem';
@@ -15,7 +16,8 @@ type BoardItemProps = {
 };
 
 export const BoardItem = ({ board }: BoardItemProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const activeBoardId = useSelector(selectActiveBoardId);
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
 
   const [editMode, setEditMode] = useState(false);
@@ -57,7 +59,7 @@ export const BoardItem = ({ board }: BoardItemProps) => {
         'board-item',
         { hovered: isHovering && !editMode },
         { 'inactive-board': editMode },
-        { 'active-board': board.isActive }
+        { 'active-board': activeBoardId === board.id }
       )}
       onClick={() => dispatch(setActiveBoard(board.id))}
       onMouseOver={handleMouseOver}

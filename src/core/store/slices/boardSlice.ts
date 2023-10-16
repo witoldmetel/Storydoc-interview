@@ -1,11 +1,11 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { getBoardInitials } from '../../components/utils';
 import { initialBoardState } from '../constants';
 import { RootState } from '../store';
-import { BoardType } from '../types';
+import { BoardSliceType, BoardType } from '../types';
 
-const initialState: BoardType[] = initialBoardState;
+const initialState: BoardSliceType = initialBoardState;
 
 const boardSlice = createSlice({
   name: 'board',
@@ -18,58 +18,53 @@ const boardSlice = createSlice({
       const date = new Date();
       const boardId = date.getTime();
 
-      // Deactivate all existing boards
-      state.forEach((board) => {
-        board.isActive = false;
-      });
+      state.activeBoardId = boardId;
 
-      state.push({
+      state.boards.push({
         id: boardId,
         name,
         initials: getBoardInitials(name),
         logo: logo || '',
-        isActive: true,
         listIds: [],
       });
     },
     updateBoard: (state, action: PayloadAction<{ id: number; newName: string }>) => {
       const { id, newName } = action.payload;
 
-      const boardIndex = state.findIndex((board) => board.id === id);
+      const boardIndex = state.boards.findIndex((board) => board.id === id);
 
       if (boardIndex !== -1) {
-        state[boardIndex].name = newName;
-        state[boardIndex].initials = getBoardInitials(newName);
+        state.boards[boardIndex].name = newName;
+        state.boards[boardIndex].initials = getBoardInitials(newName);
       }
     },
     deleteBoard: (state, action: PayloadAction<number>) => {
       const boardId = action.payload;
 
-      setActiveBoard(null);
-
-      return state.filter((board) => board.id !== boardId);
+      return {
+        activeBoardId: state.activeBoardId === boardId ? null : state.activeBoardId,
+        boards: state.boards.filter((board) => board.id !== boardId),
+      };
     },
     setActiveBoard: (state, action: PayloadAction<number | null>) => {
-      const boardIdToSetActive = action.payload;
-
-      state.forEach((board) => {
-        board.isActive = board.id === boardIdToSetActive;
-      });
+      state.activeBoardId = action.payload;
+    },
+    reorderBoards: (state, action) => {
+      return {
+        ...state,
+        boards: action.payload,
+      };
     },
   },
 });
 
-export const { createBoard, updateBoard, deleteBoard, setActiveBoard } = boardSlice.actions;
+export const { createBoard, updateBoard, deleteBoard, setActiveBoard, reorderBoards } = boardSlice.actions;
 
 export default boardSlice.reducer;
 
 /**
  * SELECTORS
  */
-const selectBoards = (state: RootState) => {
-  return state.board;
+export const selectActiveBoardId = (state: RootState) => {
+  return state.board.activeBoardId;
 };
-
-export const selectActiveBoardId = createSelector([selectBoards], (boards) => {
-  return boards.find((item) => item.isActive)?.id ?? null;
-});

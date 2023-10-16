@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Plus } from '../../../../assets/icons';
 import { selectActiveBoardId } from '../../../store/slices/boardSlice';
 import { addList } from '../../../store/slices/listSlice';
+import { AppDispatch } from '../../../store/store';
 import { Button } from '../../Button/Button';
 import { EditableListItem } from '../EditableListItem/EditableListItem';
 
 import './ListCreator.scss';
 
 export const ListCreator = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const activeBoardId = useSelector(selectActiveBoardId);
 
   const [createMode, setCreateMode] = useState(false);

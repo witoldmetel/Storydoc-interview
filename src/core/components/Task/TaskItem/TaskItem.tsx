@@ -4,6 +4,7 @@ import { clsx } from 'clsx';
 
 import { useHover } from '../../../hooks/useHover';
 import { deleteTask, updateTask } from '../../../store/slices/taskSlice';
+import { AppDispatch } from '../../../store/store';
 import { ActionButtons } from '../../ActionButtons/ActionButtons';
 import { EditableTaskItem } from '../EditableTaskItem/EditableTaskItem';
 
@@ -15,7 +16,7 @@ type TaskItemProps = {
 };
 
 export const TaskItem = ({ id, name }: TaskItemProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
 
   const [editMode, setEditMode] = useState(false);

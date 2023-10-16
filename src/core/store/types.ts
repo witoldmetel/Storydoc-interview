@@ -1,8 +1,12 @@
+export type BoardSliceType = {
+  activeBoardId: number | null;
+  boards: BoardType[];
+};
+
 export type BoardType = {
   id: number;
   name: string;
   initials: string;
-  isActive: boolean;
   listIds: ListType['id'][];
 
   logo?: string;
@@ -23,3 +27,11 @@ export type TaskType = {
 };
 
 export type SubtaskType = Omit<TaskType, 'listId' | 'subtasks'>;
+
+export const DRAGGABLE_TYPE = {
+  BOARD: 'BOARD',
+  LIST: 'LIST',
+  TASK: 'TASK',
+} as const;
+
+export type DraggableType = keyof typeof DRAGGABLE_TYPE;

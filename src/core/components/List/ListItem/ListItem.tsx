@@ -5,6 +5,7 @@ import { clsx } from 'clsx';
 import { useHover } from '../../../hooks/useHover';
 import { deleteList, updateList } from '../../../store/slices/listSlice';
 import { selectTasksFromList } from '../../../store/slices/taskSlice';
+import { AppDispatch } from '../../../store/store';
 import { ActionButtons } from '../../ActionButtons/ActionButtons';
 import { TaskCreator, TaskItem } from '../../Task';
 import { EditableListItem } from '../EditableListItem/EditableListItem';
@@ -17,7 +18,7 @@ type ListItemProps = {
 };
 
 export const ListItem = ({ id, name }: ListItemProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const tasks = useSelector((state) => selectTasksFromList(state, id));
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
 

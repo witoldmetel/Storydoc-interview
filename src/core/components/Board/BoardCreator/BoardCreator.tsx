@@ -4,6 +4,7 @@ import { clsx } from 'clsx';
 
 import { Plus, Tick } from '../../../../assets/icons';
 import { createBoard } from '../../../store/slices/boardSlice';
+import { AppDispatch } from '../../../store/store';
 import { Button } from '../../Button/Button';
 import { EditableBoardItem } from '../EditableBoardItem/EditableBoardItem';
 
@@ -16,7 +17,7 @@ type BoardCreatorProps = {
 };
 
 export const BoardCreator = ({ createMode, callback }: BoardCreatorProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [boardName, setBoardName] = useState('');
 

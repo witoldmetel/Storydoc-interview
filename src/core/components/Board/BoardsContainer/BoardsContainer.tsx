@@ -1,22 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useDispatch } from 'react-redux';
 import {
   closestCorners,
   DndContext,
-  KeyboardSensor,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
   PointerSensor,
   useDroppable,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { clsx } from 'clsx';
 
-import { useAppSelector } from '../../../store/store';
+import { reorderBoards } from '../../../store/slices/boardSlice';
+import { AppDispatch, useAppSelector } from '../../../store/store';
+import { BoardType, DRAGGABLE_TYPE } from '../../../store/types';
+import { SortableItem } from '../../SortableItem/SortableItem';
 import { BoardItem } from '../BoardItem/BoardItem';
 
 import './BoardsContainer.scss';
@@ -26,48 +28,54 @@ type BoardsContainerProps = {
 };
 
 export const BoardsContainer = ({ createMode }: BoardsContainerProps) => {
-  const boards = useAppSelector((state) => state.board);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { boards } = useAppSelector((state) => state.board);
   const { setNodeRef } = useDroppable({ id: 'boards-drop-area' });
+
   const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
     })
   );
 
-  const [items, setItems] = useState(boards);
+  // It means that user start to drag item
+  const [activeBoard, setActiveBoard] = useState<BoardType | null>(null);
 
-  useEffect(() => {
-    setItems(boards);
-  }, [boards]);
+  const onDragStart = (event: DragStartEvent) => {
+    if (event.active.data.current?.type === DRAGGABLE_TYPE.BOARD) {
+      setActiveBoard(event.active.data.current?.additionalData);
+    }
+  };
 
-  // @todo: Add proper type
-  function handleDragEnd(event: any) {
+  const onDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
-      setItems((items) => {
-        const oldIndex = items.indexOf(active.id);
-        const newIndex = items.indexOf(over.id);
+    if (over && active.id !== over.id) {
+      const oldIndex = boards.findIndex((board) => board.id === active.id);
+      const newIndex = boards.findIndex((board) => board.id === over.id);
+      const newOrder = arrayMove(boards, oldIndex, newIndex);
 
-        return arrayMove(items, oldIndex, newIndex);
-      });
+      dispatch(reorderBoards(newOrder));
     }
-  }
+  };
 
   return (
-    <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
-      <SortableContext id="boards-drop-area" items={items} strategy={verticalListSortingStrategy}>
+    <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={onDragEnd} onDragStart={onDragStart}>
+      <SortableContext id="boards-drop-area" items={boards} strategy={verticalListSortingStrategy}>
         <div ref={setNodeRef} className={clsx('boards-container', { createMode: createMode })}>
-          {items.length
-            ? items.map((board) => (
-                // <SortableItem key={board.id} id={board.id}>
-                <BoardItem key={board.id} board={board} />
-                // </SortableItem>
+          {boards.length
+            ? boards.map((board) => (
+                <SortableItem key={board.id} id={board.id} type={DRAGGABLE_TYPE.BOARD} additionalData={board}>
+                  <BoardItem board={board} />
+                </SortableItem>
               ))
             : null}
         </div>
       </SortableContext>
+      {createPortal(<DragOverlay>{activeBoard && <BoardItem board={activeBoard} />}</DragOverlay>, document.body)}
     </DndContext>
   );
 };

@@ -43,7 +43,7 @@ export default listSlice.reducer;
  * SELECTORS
  */
 const selectActiveBoardId = (state: RootState) => {
-  return state.board.find((item) => item.isActive)?.id;
+  return state.board.activeBoardId;
 };
 
 const selectLists = (state: RootState) => {

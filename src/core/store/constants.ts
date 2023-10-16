@@ -1,50 +1,53 @@
 import Images from '../../assets/images';
 
-export const initialBoardState = [
-  {
-    id: 0,
-    name: 'Acme Corp workspace',
-    initials: 'A',
-    logo: Images.PredefinedLogo,
-    isActive: true,
-    listIds: [0, 1],
-  },
-];
+export const initialBoardState = {
+  activeBoardId: 10,
+  boards: [
+    {
+      id: 10,
+      name: 'Acme Corp workspace',
+      initials: 'A',
+      logo: Images.PredefinedLogo,
+      isActive: true,
+      listIds: [0, 1],
+    },
+  ],
+};
 
 export const initialListState = [
-  { id: 0, name: 'Working on', boardId: 0, tasksIds: [0, 1] },
-  { id: 1, name: 'Review', boardId: 0, tasksIds: [2, 3, 4] },
+  { id: 10, name: 'Working on', boardId: 10, tasksIds: [10, 11] },
+  { id: 11, name: 'Review', boardId: 10, tasksIds: [12, 13, 14] },
 ];
 
 export const initialTaskState = [
   {
-    id: 0,
+    id: 10,
     name: 'Task 1',
-    listId: 0,
+    listId: 10,
     subtasks: [],
   },
   {
-    id: 1,
+    id: 11,
     name: 'Task 2',
-    listId: 0,
+    listId: 10,
     subtasks: [],
   },
   {
-    id: 2,
+    id: 12,
     name: 'Task 3',
-    listId: 1,
+    listId: 11,
     subtasks: [],
   },
   {
-    id: 3,
+    id: 13,
     name: 'Task 4',
-    listId: 1,
+    listId: 11,
     subtasks: [],
   },
   {
-    id: 4,
+    id: 14,
     name: 'Task 5',
-    listId: 1,
+    listId: 11,
     subtasks: [],
   },
 ];

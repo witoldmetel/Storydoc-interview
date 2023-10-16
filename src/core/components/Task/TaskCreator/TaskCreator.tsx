@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { addTask } from '../../../store/slices/taskSlice';
+import { AppDispatch } from '../../../store/store';
 import { CreateTaskButton } from '../CreateTaskButton/CreateTaskButton';
 import { EditableTaskItem } from '../EditableTaskItem/EditableTaskItem';
 
@@ -10,7 +11,7 @@ type TaskCreator = {
 };
 
 export const TaskCreator = ({ listId }: TaskCreator) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [createMode, setCreateMode] = useState(false);
 
