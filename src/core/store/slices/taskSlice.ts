@@ -63,11 +63,8 @@ const taskSlice = createSlice({
         });
       }
     },
-    updateSubtask: (
-      state,
-      action: PayloadAction<{ taskId: string; subtaskId: string; updatedSubtask: SubtaskType }>
-    ) => {
-      const { taskId, subtaskId, updatedSubtask } = action.payload;
+    updateSubtask: (state, action: PayloadAction<{ taskId: string; subtaskId: string; newName: string }>) => {
+      const { taskId, subtaskId, newName } = action.payload;
 
       const task = state.find((task) => task.id === taskId);
 
@@ -75,7 +72,7 @@ const taskSlice = createSlice({
         const subtaskIndex = task.subtasks.findIndex((subtask) => subtask.id === subtaskId);
 
         if (subtaskIndex !== -1) {
-          task.subtasks[subtaskIndex] = updatedSubtask;
+          task.subtasks[subtaskIndex].name = newName;
         }
       }
     },
@@ -86,6 +83,19 @@ const taskSlice = createSlice({
 
       if (task) {
         task.subtasks = task.subtasks.filter((subtask) => subtask.id !== subtaskId);
+      }
+    },
+    checkSubtask: (state, action: PayloadAction<{ taskId: string; subtaskId: string; checked: boolean }>) => {
+      const { taskId, subtaskId, checked } = action.payload;
+
+      const task = state.find((task) => task.id === taskId);
+
+      if (task) {
+        const subtaskIndex = task.subtasks.findIndex((subtask) => subtask.id === subtaskId);
+
+        if (subtaskIndex !== -1) {
+          task.subtasks[subtaskIndex].checked = checked;
+        }
       }
     },
   },
@@ -104,7 +114,7 @@ const taskSlice = createSlice({
   },
 });
 
-export const { addTask, updateTask, deleteTask, checkTask, addSubtask, updateSubtask, deleteSubtask } =
+export const { addTask, updateTask, deleteTask, checkTask, addSubtask, updateSubtask, deleteSubtask, checkSubtask } =
   taskSlice.actions;
 
 export default taskSlice.reducer;
