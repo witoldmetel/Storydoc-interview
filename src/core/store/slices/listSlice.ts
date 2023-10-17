@@ -4,6 +4,8 @@ import { initialListState } from '../constants';
 import { RootState } from '../store';
 import { ListType } from '../types';
 
+import { deleteBoard } from './boardSlice';
+
 const initialState: ListType[] = initialListState;
 
 const listSlice = createSlice({
@@ -36,12 +38,12 @@ const listSlice = createSlice({
       return action.payload;
     },
   },
-  extraReducers: {
-    ['board/deleteBoard']: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addCase(deleteBoard, (state, action: PayloadAction<string>) => {
       const boardId = action.payload;
 
       return state.filter((list) => list.boardId !== boardId);
-    },
+    });
   },
 });
 

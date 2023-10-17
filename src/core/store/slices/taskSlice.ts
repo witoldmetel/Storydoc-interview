@@ -4,6 +4,9 @@ import { initialTaskState } from '../constants';
 import { RootState } from '../store';
 import { SubtaskType, TaskType } from '../types';
 
+import { deleteBoard } from './boardSlice';
+import { deleteList } from './listSlice';
+
 const initialState: TaskType[] = initialTaskState;
 
 const taskSlice = createSlice({
@@ -92,17 +95,18 @@ const taskSlice = createSlice({
       }
     },
   },
-  extraReducers: {
-    ['board/deleteBoard']: (state, action) => {
-      const boardId = action.payload;
+  extraReducers: (builder) => {
+    builder
+      .addCase(deleteBoard, (state, action: PayloadAction<string>) => {
+        const boardId = action.payload;
 
-      return state.filter((list) => list.boardId !== boardId);
-    },
-    ['list/deleteList']: (state, action) => {
-      const listId = action.payload;
+        return state.filter((list) => list.boardId !== boardId);
+      })
+      .addCase(deleteList, (state, action: PayloadAction<string>) => {
+        const listId = action.payload;
 
-      return state.filter((task) => task.listId !== listId);
-    },
+        return state.filter((task) => task.listId !== listId);
+      });
   },
 });
 
