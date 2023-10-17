@@ -39,6 +39,9 @@ const listSlice = createSlice({
       return action.payload;
     },
   },
+  /**
+   * EXTRA REDUCERS
+   */
   extraReducers: (builder) => {
     builder
       .addCase(deleteBoard, (state, action: PayloadAction<string>) => {

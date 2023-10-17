@@ -42,6 +42,7 @@ const taskSlice = createSlice({
 
       if (taskIndex !== -1) {
         state[taskIndex].checked = checked;
+        state[taskIndex].subtasks.forEach((subtask) => (subtask.checked = checked));
       }
     },
 
@@ -96,9 +97,18 @@ const taskSlice = createSlice({
         if (subtaskIndex !== -1) {
           task.subtasks[subtaskIndex].checked = checked;
         }
+
+        if (task.subtasks.every((subtask) => subtask.checked)) {
+          task.checked = true;
+        } else {
+          task.checked = false;
+        }
       }
     },
   },
+  /**
+   * EXTRA REDUCERS
+   */
   extraReducers: (builder) => {
     builder
       .addCase(deleteBoard, (state, action: PayloadAction<string>) => {
