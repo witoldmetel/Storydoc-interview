@@ -129,3 +129,16 @@ const selectTasks = (state: RootState) => {
 export const selectTasksFromList = createSelector([selectTasks, (_, listId: string) => listId], (tasks, listId) =>
   tasks.filter((task) => task.listId === listId)
 );
+
+export const selectSubtasksInfo = createSelector([selectTasks, (_, taskId: string) => taskId], (tasks, taskId) => {
+  const selectedTask = tasks.find((task) => task.id === taskId);
+
+  if (!selectedTask) {
+    return { subtasksCount: 0, checkedSubtasksCount: 0 };
+  }
+
+  const subtasksCount = selectedTask.subtasks.length;
+  const checkedSubtasksCount = selectedTask.subtasks.filter((subtask) => subtask.checked).length;
+
+  return { subtasksCount, checkedSubtasksCount };
+});

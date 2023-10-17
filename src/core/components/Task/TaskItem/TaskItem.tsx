@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { clsx } from 'clsx';
 
@@ -11,6 +11,7 @@ import {
   checkTask,
   deleteSubtask,
   deleteTask,
+  selectSubtasksInfo,
   updateSubtask,
   updateTask,
 } from '../../../store/slices/taskSlice';
@@ -31,6 +32,7 @@ type TaskItemProps = {
 
 export const TaskItem = ({ item }: TaskItemProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { subtasksCount, checkedSubtasksCount } = useSelector((state) => selectSubtasksInfo(state, item.id));
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
 
   const [editMode, setEditMode] = useState(false);
@@ -87,6 +89,9 @@ export const TaskItem = ({ item }: TaskItemProps) => {
 
         {isHovering && !editMode ? (
           <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={deleteTaskHandler} />
+        ) : null}
+        {!isHovering && !editMode && subtasksCount !== 0 ? (
+          <p className="subtasks-counter">{`${checkedSubtasksCount}/${subtasksCount}`}</p>
         ) : null}
       </div>
 
