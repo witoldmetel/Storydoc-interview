@@ -9,6 +9,7 @@
   .list-name {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     h1 {
       font-family: Inter;
@@ -22,10 +23,6 @@
       &.hovered {
         width: 150px;
       }
-    }
-
-    &.hovered {
-      justify-content: space-between;
     }
   }
 }

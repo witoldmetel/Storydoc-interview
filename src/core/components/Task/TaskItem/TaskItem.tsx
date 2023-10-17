@@ -15,9 +15,10 @@ type TaskItemProps = {
   id: string;
   name: string;
   checked: boolean;
+  listId: string;
 };
 
-export const TaskItem = ({ id, name, checked }: TaskItemProps) => {
+export const TaskItem = ({ id, name, checked, listId }: TaskItemProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
 
@@ -43,12 +44,15 @@ export const TaskItem = ({ id, name, checked }: TaskItemProps) => {
       onMouseOut={handleMouseOut}
     >
       <div className="name-section">
-        <Checkbox checked={checked} onChange={() => dispatch(checkTask({ id, checked: !checked }))} />
+        <Checkbox checked={checked} onChange={() => dispatch(checkTask({ id, checked: !checked, listId }))} />
         <p>{name}</p>
       </div>
 
       {isHovering && !editMode ? (
-        <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={() => dispatch(deleteTask(id))} />
+        <ActionButtons
+          onEditClick={() => setEditMode(true)}
+          onDeleteClick={() => dispatch(deleteTask({ id, listId }))}
+        />
       ) : null}
     </div>
   );

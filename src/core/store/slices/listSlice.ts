@@ -5,6 +5,7 @@ import { RootState } from '../store';
 import { ListType } from '../types';
 
 import { deleteBoard } from './boardSlice';
+import { addTask, checkTask, deleteTask } from './taskSlice';
 
 const initialState: ListType[] = initialListState;
 
@@ -18,7 +19,7 @@ const listSlice = createSlice({
       // generate unique id for board
       const listId = nanoid();
 
-      state.push({ id: listId, boardId, name, tasksIds: [] });
+      state.push({ id: listId, boardId, name, tasksIncluded: [] });
     },
     updateList: (state, action: PayloadAction<{ id: string; newName: string }>) => {
       const { id, newName } = action.payload;
@@ -39,11 +40,44 @@ const listSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(deleteBoard, (state, action: PayloadAction<string>) => {
-      const boardId = action.payload;
+    builder
+      .addCase(deleteBoard, (state, action: PayloadAction<string>) => {
+        const boardId = action.payload;
 
-      return state.filter((list) => list.boardId !== boardId);
-    });
+        return state.filter((list) => list.boardId !== boardId);
+      })
+      .addCase(addTask, (state, action) => {
+        const { id: taskId, listId } = action.payload;
+
+        const listIndex = state.findIndex((list) => list.id === listId);
+
+        if (listIndex !== -1) {
+          state[listIndex].tasksIncluded = [...state[listIndex].tasksIncluded, { id: taskId, checked: false }];
+        }
+      })
+      .addCase(checkTask, (state, action) => {
+        const { id: taskId, checked, listId } = action.payload;
+
+        const listIndex = state.findIndex((list) => list.id === listId);
+
+        if (listIndex !== -1) {
+          const taskIndex = state[listIndex].tasksIncluded.findIndex((task) => task.id === taskId);
+
+          state[listIndex].tasksIncluded[taskIndex] = {
+            id: taskId,
+            checked,
+          };
+        }
+      })
+      .addCase(deleteTask, (state, action) => {
+        const { id: taskId, listId } = action.payload;
+
+        const listIndex = state.findIndex((list) => list.id === listId);
+
+        if (listIndex !== -1) {
+          state[listIndex].tasksIncluded = state[listIndex].tasksIncluded.filter((task) => task.id !== taskId);
+        }
+      });
   },
 });
 
@@ -69,3 +103,19 @@ export const selectListsFromActiveBoard = createSelector([selectActiveBoardId, s
 
   return lists.filter((list) => list.boardId === activeBoardId);
 });
+
+export const selectListTasksInfo = createSelector(
+  [selectListsFromActiveBoard, (_, listId: string) => listId],
+  (lists, listId) => {
+    const selectedList = lists.find((list) => list.id === listId);
+
+    if (!selectedList) {
+      return { tasksCount: 0, checkedTasksCount: 0 };
+    }
+
+    const tasksCount = selectedList.tasksIncluded.length;
+    const checkedTasksCount = selectedList.tasksIncluded.filter((task) => task.checked).length;
+
+    return { tasksCount, checkedTasksCount };
+  }
+);

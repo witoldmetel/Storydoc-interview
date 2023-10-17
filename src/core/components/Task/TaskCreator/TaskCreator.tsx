@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 
 import { selectActiveBoardId } from '../../../store/slices/boardSlice';
 import { addTask } from '../../../store/slices/taskSlice';
@@ -25,6 +26,7 @@ export const TaskCreator = ({ listId }: TaskCreator) => {
             if (listId) {
               dispatch(
                 addTask({
+                  id: nanoid(),
                   listId,
                   boardId: activeBoardId!,
                   name: taskName,

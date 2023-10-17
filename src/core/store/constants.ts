@@ -9,14 +9,30 @@ export const initialBoardState = {
       initials: 'A',
       logo: Images.PredefinedLogo,
       isActive: true,
-      listIds: ['10', '11'],
     },
   ],
 };
 
 export const initialListState = [
-  { id: '10', name: 'Working on', boardId: '10', tasksIds: ['10', '11'] },
-  { id: '11', name: 'Review', boardId: '10', tasksIds: ['12', '13', '14'] },
+  {
+    id: '10',
+    name: 'Working on',
+    boardId: '10',
+    tasksIncluded: [
+      { id: '10', checked: false },
+      { id: '11', checked: true },
+    ],
+  },
+  {
+    id: '11',
+    name: 'Review',
+    boardId: '10',
+    tasksIncluded: [
+      { id: '12', checked: true },
+      { id: '13', checked: false },
+      { id: '14', checked: true },
+    ],
+  },
 ];
 
 export const initialTaskState = [

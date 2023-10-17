@@ -16,13 +16,10 @@ const taskSlice = createSlice({
     /**
      * TASK
      */
-    addTask: (state, action: PayloadAction<Pick<TaskType, 'listId' | 'boardId' | 'name'>>) => {
-      const { listId, boardId, name } = action.payload;
+    addTask: (state, action: PayloadAction<Pick<TaskType, 'id' | 'listId' | 'boardId' | 'name'>>) => {
+      const { id, listId, boardId, name } = action.payload;
 
-      // generate unique id for board
-      const taskId = nanoid();
-
-      state.push({ id: taskId, listId, boardId, name, checked: false, subtasks: [] });
+      state.push({ id, listId, boardId, name, checked: false, subtasks: [] });
     },
     updateTask: (state, action: PayloadAction<{ id: string; newName: string }>) => {
       const { id, newName } = action.payload;
@@ -33,12 +30,12 @@ const taskSlice = createSlice({
         state[taskIndex].name = newName;
       }
     },
-    deleteTask: (state, action: PayloadAction<string>) => {
-      const taskIdToDelete = action.payload;
+    deleteTask: (state, action: PayloadAction<{ id: string; listId: string }>) => {
+      const { id: taskId } = action.payload;
 
-      return state.filter((task) => task.id !== taskIdToDelete);
+      return state.filter((task) => task.id !== taskId);
     },
-    checkTask: (state, action: PayloadAction<{ id: string; checked: boolean }>) => {
+    checkTask: (state, action: PayloadAction<{ id: string; checked: boolean; listId: string }>) => {
       const { id, checked } = action.payload;
 
       const taskIndex = state.findIndex((task) => task.id === id);

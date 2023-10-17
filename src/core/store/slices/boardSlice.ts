@@ -24,7 +24,6 @@ const boardSlice = createSlice({
         name,
         initials: getBoardInitials(name),
         logo: logo || '',
-        listIds: [],
       });
     },
     updateBoard: (state, action: PayloadAction<{ id: string; newName: string }>) => {

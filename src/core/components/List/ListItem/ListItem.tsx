@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clsx } from 'clsx';
 
 import { useHover } from '../../../hooks/useHover';
-import { deleteList, updateList } from '../../../store/slices/listSlice';
+import { deleteList, selectListTasksInfo, updateList } from '../../../store/slices/listSlice';
 import { selectTasksFromList } from '../../../store/slices/taskSlice';
 import { AppDispatch } from '../../../store/store';
 import { ActionButtons } from '../../ActionButtons/ActionButtons';
@@ -20,6 +20,8 @@ type ListItemProps = {
 export const ListItem = ({ id, name }: ListItemProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const tasks = useSelector((state) => selectTasksFromList(state, id));
+  const { tasksCount, checkedTasksCount } = useSelector((state) => selectListTasksInfo(state, id));
+
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
 
   const [editMode, setEditMode] = useState(false);
@@ -50,11 +52,14 @@ export const ListItem = ({ id, name }: ListItemProps) => {
             {isHovering && !editMode ? (
               <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={() => dispatch(deleteList(id))} />
             ) : null}
+            {!isHovering && !editMode && tasksCount !== 0 ? <h1>{`${checkedTasksCount}/${tasksCount}`}</h1> : null}
           </div>
         )}
 
         {tasks.length
-          ? tasks.map((task) => <TaskItem key={task.id} id={task.id} name={task.name} checked={task.checked} />)
+          ? tasks.map((task) => (
+              <TaskItem key={task.id} id={task.id} name={task.name} checked={task.checked} listId={task.listId} />
+            ))
           : null}
         <TaskCreator listId={id} />
       </div>

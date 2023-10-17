@@ -7,7 +7,6 @@ export type BoardType = {
   id: string;
   name: string;
   initials: string;
-  listIds: ListType['id'][];
 
   logo?: string;
 };
@@ -16,7 +15,7 @@ export type ListType = {
   id: string;
   name: string;
   boardId: BoardType['id'];
-  tasksIds: TaskType['id'][];
+  tasksIncluded: Pick<TaskType, 'id' | 'checked'>[];
 };
 
 export type TaskType = {
