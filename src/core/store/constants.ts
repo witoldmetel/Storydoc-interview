@@ -23,6 +23,7 @@ export const initialTaskState = [
   {
     id: '10',
     name: 'Task 1',
+    checked: false,
     boardId: '10',
     listId: '10',
     subtasks: [],
@@ -30,6 +31,7 @@ export const initialTaskState = [
   {
     id: '11',
     name: 'Task 2',
+    checked: true,
     boardId: '10',
     listId: '10',
     subtasks: [],
@@ -37,6 +39,7 @@ export const initialTaskState = [
   {
     id: '12',
     name: 'Task 3',
+    checked: true,
     boardId: '10',
     listId: '11',
     subtasks: [],
@@ -44,6 +47,7 @@ export const initialTaskState = [
   {
     id: '13',
     name: 'Task 4',
+    checked: false,
     boardId: '10',
     listId: '11',
     subtasks: [],
@@ -51,6 +55,7 @@ export const initialTaskState = [
   {
     id: '14',
     name: 'Task 5',
+    checked: true,
     boardId: '10',
     listId: '11',
     subtasks: [],

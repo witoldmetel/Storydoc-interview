@@ -7,14 +7,20 @@
   padding: 16px;
   height: 50px;
 
-  p {
-    color: #001c39;
-    font-family: Inter;
-    font-size: 13px;
-    font-weight: 400;
+  .name-section {
+    display: flex;
+    align-items: center;
 
-    &.hovered {
-      width: 150px;
+    p {
+      color: #001c39;
+      font-family: Inter;
+      font-size: 13px;
+      font-weight: 400;
+      margin-left: 4px;
+
+      &.hovered {
+        width: 150px;
+      }
     }
   }
 

@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import { clsx } from 'clsx';
 
 import { useHover } from '../../../hooks/useHover';
-import { deleteTask, updateTask } from '../../../store/slices/taskSlice';
+import { checkTask, deleteTask, updateTask } from '../../../store/slices/taskSlice';
 import { AppDispatch } from '../../../store/store';
 import { ActionButtons } from '../../ActionButtons/ActionButtons';
+import { Checkbox } from '../../Checkbox/Checkbox';
 import { EditableTaskItem } from '../EditableTaskItem/EditableTaskItem';
 
 import './TaskItem.scss';
@@ -13,9 +14,10 @@ import './TaskItem.scss';
 type TaskItemProps = {
   id: string;
   name: string;
+  checked: boolean;
 };
 
-export const TaskItem = ({ id, name }: TaskItemProps) => {
+export const TaskItem = ({ id, name, checked }: TaskItemProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
 
@@ -40,7 +42,11 @@ export const TaskItem = ({ id, name }: TaskItemProps) => {
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
-      <p>{name}</p>
+      <div className="name-section">
+        <Checkbox checked={checked} onChange={() => dispatch(checkTask({ id, checked: !checked }))} />
+        <p>{name}</p>
+      </div>
+
       {isHovering && !editMode ? (
         <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={() => dispatch(deleteTask(id))} />
       ) : null}

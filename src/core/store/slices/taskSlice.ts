@@ -19,7 +19,7 @@ const taskSlice = createSlice({
       // generate unique id for board
       const taskId = nanoid();
 
-      state.push({ id: taskId, listId, boardId, name, subtasks: [] });
+      state.push({ id: taskId, listId, boardId, name, checked: false, subtasks: [] });
     },
     updateTask: (state, action: PayloadAction<{ id: string; newName: string }>) => {
       const { id, newName } = action.payload;
@@ -34,6 +34,15 @@ const taskSlice = createSlice({
       const taskIdToDelete = action.payload;
 
       return state.filter((task) => task.id !== taskIdToDelete);
+    },
+    checkTask: (state, action: PayloadAction<{ id: string; checked: boolean }>) => {
+      const { id, checked } = action.payload;
+
+      const taskIndex = state.findIndex((task) => task.id === id);
+
+      if (taskIndex !== -1) {
+        state[taskIndex].checked = checked;
+      }
     },
 
     /**
@@ -51,6 +60,7 @@ const taskSlice = createSlice({
         task.subtasks.push({
           id: subtaskId,
           name,
+          checked: false,
           // @todo: Add proper boardId
           boardId: '',
         });
@@ -96,7 +106,8 @@ const taskSlice = createSlice({
   },
 });
 
-export const { addTask, updateTask, deleteTask, addSubtask, updateSubtask, deleteSubtask } = taskSlice.actions;
+export const { addTask, updateTask, deleteTask, checkTask, addSubtask, updateSubtask, deleteSubtask } =
+  taskSlice.actions;
 
 export default taskSlice.reducer;
 
