@@ -1,4 +1,4 @@
-import { createSelector, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { initialTaskState } from '../constants';
 import { RootState } from '../store';
@@ -48,11 +48,8 @@ const taskSlice = createSlice({
     /**
      * SUBTASK
      */
-    addSubtask: (state, action: PayloadAction<{ taskId: string; name: string }>) => {
-      const { taskId, name } = action.payload;
-
-      // generate unique id for board
-      const subtaskId = nanoid();
+    addSubtask: (state, action: PayloadAction<Pick<SubtaskType, 'id' | 'taskId' | 'boardId' | 'name'>>) => {
+      const { id: subtaskId, taskId, name, boardId } = action.payload;
 
       const task = state.find((task) => task.id === taskId);
 
@@ -61,8 +58,8 @@ const taskSlice = createSlice({
           id: subtaskId,
           name,
           checked: false,
-          // @todo: Add proper boardId
-          boardId: '',
+          boardId,
+          taskId,
         });
       }
     },

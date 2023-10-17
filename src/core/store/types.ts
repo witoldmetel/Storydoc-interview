@@ -27,7 +27,7 @@ export type TaskType = {
   subtasks: SubtaskType[];
 };
 
-export type SubtaskType = Omit<TaskType, 'listId' | 'subtasks'>;
+export type SubtaskType = Omit<TaskType, 'listId' | 'subtasks'> & { taskId: string };
 
 export const DRAGGABLE_TYPE = {
   BOARD: 'BOARD',
