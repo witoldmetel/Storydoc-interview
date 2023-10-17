@@ -52,7 +52,9 @@ export const ListItem = ({ id, name }: ListItemProps) => {
             {isHovering && !editMode ? (
               <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={() => dispatch(deleteList(id))} />
             ) : null}
-            {!isHovering && !editMode && tasksCount !== 0 ? <h1>{`${checkedTasksCount}/${tasksCount}`}</h1> : null}
+            {!isHovering && !editMode && tasksCount !== 0 ? (
+              <h1 className="tasks-counter">{`${checkedTasksCount}/${tasksCount}`}</h1>
+            ) : null}
           </div>
         )}
 

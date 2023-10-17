@@ -22,6 +22,23 @@
         width: 150px;
       }
     }
+
+    .dropdown {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      margin-right: 4px;
+
+      &.isOpen {
+        transform: rotate(90deg);
+      }
+    }
   }
 
   &.hovered {

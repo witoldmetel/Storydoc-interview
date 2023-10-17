@@ -1,3 +1,4 @@
+export { ArrowLeft } from './ArrowLeft';
 export { Boards } from './Boards';
 export { Home } from './Home';
 export { Pencil } from './Pencil';
