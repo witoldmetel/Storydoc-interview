@@ -60,7 +60,7 @@ export const ListItem = ({ id, name }: ListItemProps) => {
           </div>
         )}
 
-        {tasks.length ? tasks.map((task) => <TaskItem key={task.id} task={task} />) : null}
+        {tasks.length ? tasks.map((task) => <TaskItem key={task.id} item={task} />) : null}
         <TaskCreator
           placeholder="Add a card"
           taskConfirmHandler={(taskName) => {

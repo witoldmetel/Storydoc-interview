@@ -26,45 +26,45 @@ import { TaskCreator } from '../TaskCreator/TaskCreator';
 import './TaskItem.scss';
 
 type TaskItemProps = {
-  task: TaskType | SubtaskType;
+  item: TaskType | SubtaskType;
 };
 
-export const TaskItem = ({ task }: TaskItemProps) => {
+export const TaskItem = ({ item }: TaskItemProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
 
   const [editMode, setEditMode] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
 
-  const taskItem = isTask(task);
+  const taskItem = isTask(item);
 
   const updateTaskHandler = taskItem
     ? (taskName: string) =>
         dispatch(
           updateTask({
-            id: task.id,
+            id: item.id,
             newName: taskName,
           })
         )
     : (subtaskName: string) =>
         dispatch(
           updateSubtask({
-            taskId: task.taskId,
-            subtaskId: task.id,
+            taskId: item.taskId,
+            subtaskId: item.id,
             newName: subtaskName,
           })
         );
 
   const checkTaskHandler = taskItem
-    ? () => dispatch(checkTask({ id: task.id, checked: !task.checked, listId: task.listId }))
-    : () => dispatch(checkSubtask({ subtaskId: task.id, taskId: task.taskId, checked: !task.checked }));
+    ? () => dispatch(checkTask({ id: item.id, checked: !item.checked, listId: item.listId }))
+    : () => dispatch(checkSubtask({ subtaskId: item.id, taskId: item.taskId, checked: !item.checked }));
 
   const deleteTaskHandler = taskItem
-    ? () => dispatch(deleteTask({ id: task.id, listId: task.listId }))
-    : () => dispatch(deleteSubtask({ subtaskId: task.id, taskId: task.taskId }));
+    ? () => dispatch(deleteTask({ id: item.id, listId: item.listId }))
+    : () => dispatch(deleteSubtask({ subtaskId: item.id, taskId: item.taskId }));
 
   return editMode ? (
-    <EditableTaskItem name={task.name} confirmHandler={updateTaskHandler} callback={() => setEditMode(false)} />
+    <EditableTaskItem name={item.name} confirmHandler={updateTaskHandler} callback={() => setEditMode(false)} />
   ) : (
     <>
       <div
@@ -73,7 +73,7 @@ export const TaskItem = ({ task }: TaskItemProps) => {
         onMouseOut={handleMouseOut}
       >
         <div className="name-section">
-          {isHovering && !editMode && taskItem ? (
+          {!editMode && taskItem && (isHovering || item.subtasks.length) ? (
             <Button
               className={clsx('dropdown', { isOpen: openDropdown })}
               onClick={() => setOpenDropdown((prev) => !prev)}
@@ -81,8 +81,8 @@ export const TaskItem = ({ task }: TaskItemProps) => {
               <ArrowLeft />
             </Button>
           ) : null}
-          <Checkbox checked={task.checked} onChange={checkTaskHandler} />
-          <p>{task.name}</p>
+          <Checkbox checked={item.checked} onChange={checkTaskHandler} />
+          <p>{item.name}</p>
         </div>
 
         {isHovering && !editMode ? (
@@ -93,7 +93,7 @@ export const TaskItem = ({ task }: TaskItemProps) => {
       {openDropdown && taskItem ? (
         <>
           <div className="subtasks-container">
-            {task.subtasks.length ? task.subtasks.map((subtask) => <TaskItem key={subtask.id} task={subtask} />) : null}
+            {item.subtasks.length ? item.subtasks.map((subtask) => <TaskItem key={subtask.id} item={subtask} />) : null}
           </div>
           <TaskCreator
             placeholder="Add a subtask"
@@ -101,8 +101,8 @@ export const TaskItem = ({ task }: TaskItemProps) => {
               dispatch(
                 addSubtask({
                   id: nanoid(),
-                  taskId: task.id,
-                  boardId: task.boardId,
+                  taskId: item.id,
+                  boardId: item.boardId,
                   name: subtaskName,
                 })
               );
