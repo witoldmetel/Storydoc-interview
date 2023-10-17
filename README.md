@@ -8,11 +8,11 @@ Create a Kanban board application with multiple workspaces, groups of tasks, and
 - [x] Create, update, and delete workspaces.
 - [x] Reorder workspaces via drag-and-drop.
 - [x] Create, update, and delete task groups within workspaces.
-- [ ] Reorder task groups within a workspace via drag-and-drop.
+- [x] Reorder task groups within a workspace via drag-and-drop.
 - [x] Create, update, and delete individual tasks within task groups.
 - [ ] Move tasks between groups in the same workspace via drag-and-drop.
-- [ ] Add subtasks to tasks, including creating, updating, and deleting them, with checkboxes for completion.
-- [ ] Display a task completion counter within each group.
+- [x] Add subtasks to tasks, including creating, updating, and deleting them, with checkboxes for completion.
+- [x] Display a task completion counter within each group.
 
 ### Additional
 
