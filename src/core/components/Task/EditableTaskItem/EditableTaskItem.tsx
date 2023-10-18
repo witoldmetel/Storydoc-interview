@@ -32,35 +32,16 @@ export const EditableTaskItem = ({ name, confirmHandler, callback }: EditableTas
   };
 
   return (
-    <>
-      <input
-        type="text"
-        className="task-input"
-        placeholder="Title of the new card..."
-        maxLength={28}
-        value={taskName}
-        onChange={handleInputChange}
-        onBlur={createNewCard}
-        onKeyDown={handleInputKeyPress}
-        autoFocus
-      />
-      {/* @todo: Prepare subtask section */}
-      {/* {createSubtaskMode ? (
-        <EditableTaskItem
-          confirmHandler={(taskName) => {
-            if (taskId) {
-              dispatch(
-                addSubtask({
-                  taskId,
-                  name: taskName,
-                })
-              );
-            }
-          }}
-          callback={() => setCreateSubtaskMode(false)}
-        />
-      ) : null}
-      <CreateTaskButton placeholder="Add a subtask" onClick={() => setCreateSubtaskMode(true)} /> */}
-    </>
+    <input
+      type="text"
+      className="task-input"
+      placeholder="Title of the new card..."
+      maxLength={28}
+      value={taskName}
+      onChange={handleInputChange}
+      onBlur={createNewCard}
+      onKeyDown={handleInputKeyPress}
+      autoFocus
+    />
   );
 };

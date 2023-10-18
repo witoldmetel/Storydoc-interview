@@ -91,16 +91,14 @@ export const TaskItem = forwardRef<HTMLInputElement, TaskItemProps>(({ item, isD
         </div>
 
         {hovered ? <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={deleteTaskHandler} /> : null}
-        {!isHovering && !editMode && subtasksCount !== 0 ? (
+        {!isHovering && !editMode && subtasksCount !== 0 && taskItem ? (
           <p className="subtasks-counter">{`${checkedSubtasksCount}/${subtasksCount}`}</p>
         ) : null}
       </div>
 
       {openDropdown && taskItem ? (
-        <>
-          <div className="subtasks-container">
-            {item.subtasks.length ? item.subtasks.map((subtask) => <TaskItem key={subtask.id} item={subtask} />) : null}
-          </div>
+        <div className="subtasks-container">
+          {item.subtasks.length ? item.subtasks.map((subtask) => <TaskItem key={subtask.id} item={subtask} />) : null}
           <TaskCreator
             placeholder="Add a subtask"
             taskConfirmHandler={(subtaskName) => {
@@ -114,7 +112,7 @@ export const TaskItem = forwardRef<HTMLInputElement, TaskItemProps>(({ item, isD
               );
             }}
           />
-        </>
+        </div>
       ) : null}
     </>
   );
