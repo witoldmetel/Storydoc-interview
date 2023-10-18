@@ -73,20 +73,20 @@ export const ListsContainer = () => {
         dispatch(reorderTasks(newOrder));
       }
 
+      // @todo: Fix DnD for Lists
       // if (isOverList) {
-      //   tasks[oldIndex].list = overId as string;
+      //   const listIndex = lists.findIndex((list) => list.id === over.data.current?.id);
 
-      //   const newOrder = arrayMove(tasks, oldIndex, oldIndex);
+      //   if (listIndex !== -1) {
+      //     const { id, checked } = active.data.current?.additionalData ?? null;
 
-      //   dispatch(reorderTasks(newOrder));
+      //     lists[listIndex].tasksIncluded = [...lists[listIndex].tasksIncluded, { id, checked }];
+      //   }
       // }
     }
   };
 
   const onDragEnd = (event: DragEndEvent) => {
-    setActiveList(null);
-    setActiveTask(null);
-
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
@@ -96,6 +96,9 @@ export const ListsContainer = () => {
 
       dispatch(reorderLists(newOrder));
     }
+
+    setActiveList(null);
+    setActiveTask(null);
   };
 
   return (

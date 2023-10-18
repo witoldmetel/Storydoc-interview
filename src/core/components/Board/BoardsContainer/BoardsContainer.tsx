@@ -61,7 +61,7 @@ export const BoardsContainer = ({ createMode }: BoardsContainerProps) => {
 
   return (
     <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={onDragEnd} onDragStart={onDragStart}>
-      <SortableContext id="boards-drop-area" items={boards} strategy={verticalListSortingStrategy}>
+      <SortableContext items={boards} strategy={verticalListSortingStrategy}>
         <div className={clsx('boards-container', { createMode: createMode })}>
           {boards.length
             ? boards.map((board) => (
