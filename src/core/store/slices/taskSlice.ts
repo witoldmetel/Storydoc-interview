@@ -45,6 +45,9 @@ const taskSlice = createSlice({
         state[taskIndex].subtasks.forEach((subtask) => (subtask.checked = checked));
       }
     },
+    reorderTasks: (_, action: PayloadAction<TaskType[]>) => {
+      return action.payload;
+    },
 
     /**
      * SUBTASK
@@ -124,8 +127,17 @@ const taskSlice = createSlice({
   },
 });
 
-export const { addTask, updateTask, deleteTask, checkTask, addSubtask, updateSubtask, deleteSubtask, checkSubtask } =
-  taskSlice.actions;
+export const {
+  addTask,
+  updateTask,
+  deleteTask,
+  checkTask,
+  reorderTasks,
+  addSubtask,
+  updateSubtask,
+  deleteSubtask,
+  checkSubtask,
+} = taskSlice.actions;
 
 export default taskSlice.reducer;
 

@@ -66,6 +66,7 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx', '.js', '.jsx'] }],
     'react/jsx-props-no-spreading': 0,
     'react-refresh/only-export-components': [1, { allowConstantExport: true }],
+    'react/display-name': 0,
   },
   overrides: [
     // override "simple-import-sort" config

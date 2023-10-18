@@ -46,6 +46,8 @@ export const BoardsContainer = ({ createMode }: BoardsContainerProps) => {
   };
 
   const onDragEnd = (event: DragEndEvent) => {
+    setActiveBoard(null);
+
     const { active, over } = event;
 
     if (over && active.id !== over.id) {

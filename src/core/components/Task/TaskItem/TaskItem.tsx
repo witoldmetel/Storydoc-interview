@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { clsx } from 'clsx';
@@ -28,9 +28,10 @@ import './TaskItem.scss';
 
 type TaskItemProps = {
   item: TaskType | SubtaskType;
+  isDragging?: boolean;
 };
 
-export const TaskItem = ({ item }: TaskItemProps) => {
+export const TaskItem = forwardRef<HTMLInputElement, TaskItemProps>(({ item, isDragging }, ref) => {
   const dispatch = useDispatch<AppDispatch>();
   const { subtasksCount, checkedSubtasksCount } = useSelector((state) => selectSubtasksInfo(state, item.id));
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
@@ -39,6 +40,7 @@ export const TaskItem = ({ item }: TaskItemProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
 
   const taskItem = isTask(item);
+  const hovered = isHovering && !editMode && !isDragging;
 
   const updateTaskHandler = taskItem
     ? (taskName: string) =>
@@ -70,12 +72,13 @@ export const TaskItem = ({ item }: TaskItemProps) => {
   ) : (
     <>
       <div
-        className={clsx('task-item', { hovered: isHovering && !editMode })}
+        className={clsx('task-item', { hovered })}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
+        ref={ref}
       >
         <div className="name-section">
-          {!editMode && taskItem && (isHovering || item.subtasks.length) ? (
+          {!editMode && taskItem && !isDragging && (isHovering || item.subtasks.length) ? (
             <Button
               className={clsx('dropdown', { isOpen: openDropdown })}
               onClick={() => setOpenDropdown((prev) => !prev)}
@@ -87,9 +90,7 @@ export const TaskItem = ({ item }: TaskItemProps) => {
           <p>{item.name}</p>
         </div>
 
-        {isHovering && !editMode ? (
-          <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={deleteTaskHandler} />
-        ) : null}
+        {hovered ? <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={deleteTaskHandler} /> : null}
         {!isHovering && !editMode && subtasksCount !== 0 ? (
           <p className="subtasks-counter">{`${checkedSubtasksCount}/${subtasksCount}`}</p>
         ) : null}
@@ -117,4 +118,4 @@ export const TaskItem = ({ item }: TaskItemProps) => {
       ) : null}
     </>
   );
-};
+});

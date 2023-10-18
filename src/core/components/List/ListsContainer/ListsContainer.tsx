@@ -14,8 +14,9 @@ import { arrayMove, horizontalListSortingStrategy, SortableContext } from '@dnd-
 
 import { reorderLists, selectListsFromActiveBoard } from '../../../store/slices/listSlice';
 import { AppDispatch } from '../../../store/store';
-import { DRAGGABLE_TYPE, ListType } from '../../../store/types';
+import { DRAGGABLE_TYPE, ListType, TaskType } from '../../../store/types';
 import { SortableItem } from '../../SortableItem/SortableItem';
+import { TaskItem } from '../../Task';
 import { ListItem } from '../ListItem/ListItem';
 
 export const ListsContainer = () => {
@@ -31,14 +32,22 @@ export const ListsContainer = () => {
 
   // It means that user start to drag item
   const [activeList, setActiveList] = useState<ListType | null>(null);
+  const [activeTask, setActiveTask] = useState<TaskType | null>(null);
 
   const onDragStart = (event: DragStartEvent) => {
     if (event.active.data.current?.type === DRAGGABLE_TYPE.LIST) {
       setActiveList(event.active.data.current?.additionalData);
     }
+
+    if (event.active.data.current?.type === DRAGGABLE_TYPE.TASK) {
+      setActiveTask(event.active.data.current?.additionalData);
+    }
   };
 
   const onDragEnd = (event: DragEndEvent) => {
+    setActiveList(null);
+    setActiveTask(null);
+
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
@@ -61,13 +70,16 @@ export const ListsContainer = () => {
       <SortableContext items={lists} strategy={horizontalListSortingStrategy}>
         {lists.length
           ? lists.map((list) => (
-              <SortableItem key={list.id} id={list.id} type={DRAGGABLE_TYPE.LIST}>
-                <ListItem id={list.id} name={list.name} />
+              <SortableItem key={list.id} id={list.id} type={DRAGGABLE_TYPE.LIST} additionalData={list}>
+                <ListItem list={list} />
               </SortableItem>
             ))
           : null}
       </SortableContext>
-      <DragOverlay>{activeList && <ListItem id={activeList.id} name={activeList.name} />}</DragOverlay>
+      <DragOverlay>
+        {activeList && <ListItem list={activeList} isDragging />}
+        {activeTask && <TaskItem item={activeTask} isDragging />}
+      </DragOverlay>
     </DndContext>
   );
 };

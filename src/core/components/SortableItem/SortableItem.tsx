@@ -28,18 +28,17 @@ export const SortableItem = ({ id, type, children, additionalData }: SortableIte
     opacity: isDragging ? '0.3' : '1',
   };
 
-  // @todo: Check if you have to pass additional props to children
-  // const childrenWithProps = React.Children.map(children, (child) => {
-  //   if (React.isValidElement(child)) {
-  //     return React.cloneElement(child, { isDragging } as React.HTMLProps<HTMLDivElement>);
-  //   }
+  const childrenWithProps = React.Children.map(children, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, { ref: setNodeRef } as React.HTMLProps<HTMLDivElement>);
+    }
 
-  //   return child;
-  // });
+    return child;
+  });
 
   return (
-    <div ref={setNodeRef} {...attributes} {...listeners} style={style}>
-      {children}
+    <div {...attributes} {...listeners} style={style}>
+      {childrenWithProps}
     </div>
   );
 };

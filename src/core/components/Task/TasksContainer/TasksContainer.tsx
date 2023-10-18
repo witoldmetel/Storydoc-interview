@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { nanoid } from '@reduxjs/toolkit';
 
 import { selectActiveBoardId } from '../../../store/slices/boardSlice';
 import { addTask, selectTasksFromList } from '../../../store/slices/taskSlice';
 import { AppDispatch } from '../../../store/store';
+import { DRAGGABLE_TYPE } from '../../../store/types';
+import { SortableItem } from '../../SortableItem/SortableItem';
 import { TaskCreator } from '../TaskCreator/TaskCreator';
 import { TaskItem } from '../TaskItem/TaskItem';
 
@@ -18,7 +21,15 @@ export const TasksContainer = ({ listId }: TasksContainerProps) => {
 
   return (
     <>
-      {tasks.length ? tasks.map((task) => <TaskItem key={task.id} item={task} />) : null}
+      <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
+        {tasks.length
+          ? tasks.map((task) => (
+              <SortableItem key={task.id} id={task.id} type={DRAGGABLE_TYPE.TASK} additionalData={task}>
+                <TaskItem item={task} />
+              </SortableItem>
+            ))
+          : null}
+      </SortableContext>
       <TaskCreator
         placeholder="Add a card"
         taskConfirmHandler={(taskName) => {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clsx } from 'clsx';
 
@@ -16,7 +16,7 @@ type BoardItemProps = {
   isDragging?: boolean;
 };
 
-export const BoardItem = ({ board, isDragging }: BoardItemProps) => {
+export const BoardItem = forwardRef<HTMLInputElement, BoardItemProps>(({ board, isDragging }, ref) => {
   const dispatch = useDispatch<AppDispatch>();
   const activeBoardId = useSelector(selectActiveBoardId);
   const [isHovering, handleMouseOver, handleMouseOut] = useHover();
@@ -60,20 +60,21 @@ export const BoardItem = ({ board, isDragging }: BoardItemProps) => {
     <div
       className={clsx(
         'board-item',
-        { hovered: hovered },
+        { hovered },
         { 'inactive-board': editMode },
         { 'active-board': activeBoardId === board.id }
       )}
       onClick={() => dispatch(setActiveBoard(board.id))}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
+      ref={ref}
     >
       <div className="board-item-content">
         {board.logo ? <img src={board.logo} alt={board.name} /> : <span className="initials">{board.initials}</span>}
-        <span className={clsx({ hovered: hovered })}>{board.name}</span>
+        <span className={clsx({ hovered })}>{board.name}</span>
       </div>
 
       {hovered ? <ActionButtons onEditClick={() => setEditMode(true)} onDeleteClick={onDeleteClick} /> : null}
     </div>
   );
-};
+});
